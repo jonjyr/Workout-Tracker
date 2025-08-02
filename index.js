@@ -6,11 +6,12 @@ import App from './App';
 // It also ensures that whether you load the app in Expo Go or in a native build,
 // the environment is set up appropriately
 function Root() {
-    return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-            <App />
-        </GestureHandlerRootView>
-    );
+  return (
+    // FYI: Use GestureHandlerRootView around the App to enable gestures on Expo
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <App />
+    </GestureHandlerRootView>
+  );
 }
 
 registerRootComponent(Root);

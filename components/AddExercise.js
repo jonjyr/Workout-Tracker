@@ -3,23 +3,18 @@ import { View, Text, StyleSheet, Button, Modal, FlatList, TouchableOpacity, Aler
 import ExerciseInput from './ExerciseInput';
 import { init, saveExercise, fetchAllExercises, deleteExercise } from '../sqlconnection/db';
 
+// Modal component for choosing or adding a new exercise from a list to App.js
 const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, setShowExerciseInputModal}) => {
+  // State for the list of exercises
   const [exerciseList, setExerciseList] = useState([]);
 
+  // useEffect hook to fetch exercises when the modal is opened
   useEffect(()=>{
     init();
     readExercises();
   },[]);
 
-  async function saveExerciseToDB(name) {
-    try{
-      const dbResult = await saveExercise(name);
-      console.log("Adding succeeded!");
-    }
-    catch(err){
-      console.log("Adding failed!");
-    }
-  };
+  // Async function for fetching all exercises from DB
   async function readExercises(){
     try{
       const dbResult = await fetchAllExercises();
@@ -30,9 +25,10 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
     }
   };
 
+  // Async function for adding a new exercise from ExerciseInput.js to the DB and to the list of exercises 
   const inputExercise = async (exercise) => {
     try {
-      await saveExerciseToDB(exercise);
+      await saveExerciseToDB(exercise); // FYI: Function to save exercise to DB called here
       const updatedList = await fetchAllExercises();
       setExerciseList(updatedList);
     } catch (error) {
@@ -42,10 +38,18 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
     }
   };
 
-  const cancelInputModal = () => {
-    setShowExerciseInputModal(false);
+  // Async function for saving an added exercise to DB
+  async function saveExerciseToDB(name) {
+    try{
+      const dbResult = await saveExercise(name);
+      console.log("Adding succeeded!");
+    }
+    catch(err){
+      console.log("Adding failed!");
+    }
   };
 
+  // Function for deleting an exercise from the list and from the DB with a long press (with confirmation)
   const deleteExerciseFromDB = (exercise) => {
     Alert.alert(
       "Delete Exercise",
@@ -56,6 +60,7 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
           style: "cancel"
         },
         { text: "OK",
+          // FYI: Async function for deleting exercise from DB here after pressing OK
           onPress: async () => {
             try {
               await deleteExercise(exercise);
@@ -71,16 +76,21 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
     )
   };
 
+  // Function for cancel button
+  const cancelInputModal = () => {
+    setShowExerciseInputModal(false);
+  };
 
   return (
     <View style={styles.screen}>
       <Modal visible={visible}>
-        <Text style={styles.heading}>
-          Choose an exercise from the list below or add a new one
-        </Text>
+        <Text style={styles.heading}>Choose an exercise from the list below or add a new one</Text>
         <View style={styles.buttonContainer}>
           <View style={styles.buttonStyle}>
-            <Button title="Add New Exercise" onPress={() => setShowExerciseInputModal(true)}/>         
+            <Button 
+              title="Add New Exercise"
+              onPress={() => setShowExerciseInputModal(true)}
+            />         
           </View>
           <View style={styles.buttonStyle}>
             <TouchableOpacity 
@@ -90,11 +100,11 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
               <Text style={styles.cancelText}>Cancel</Text>
             </TouchableOpacity>
           </View>
-
         </View>
         <View style={styles.listStyle}>
           <FlatList
             data={exerciseList}
+            contentContainerStyle={{paddingBottom: 100}} // FYI: Add padding to the bottom of the list to make it wholly visible
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => 
               <TouchableOpacity 
@@ -108,7 +118,7 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
           />
         </View>
       </Modal>
-      <ExerciseInput 
+      <ExerciseInput // FYI: Modal component ExerciseInput.js for inputting a new exercise called here
         visible={showExerciseInputModal} 
         onInputExercise={inputExercise}
         onInputCancel={cancelInputModal}

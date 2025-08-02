@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Modal, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { init, fetchAllWorkouts, deleteWorkout } from '../sqlconnection/db';
 
+// Modal component for imporing a saved workout in App.js
 const ChooseWorkout = ({visible, onImportWorkout, onImportCancel}) => {
+  // State for the list of workouts
   const [workoutList, setWorkoutList] = useState([]);
 
+  // useEffect hook to fetch workouts when the modal is opened
   useEffect(() => {
     if (visible) {
       init();
@@ -12,6 +15,7 @@ const ChooseWorkout = ({visible, onImportWorkout, onImportCancel}) => {
     }
   }, [visible]);
 
+  // Function for deleting a workout from the list with a long press (with confirmation)
   const confirmDeleteWorkout = (id) => {
     Alert.alert(
       "Delete Workout",
@@ -30,21 +34,23 @@ const ChooseWorkout = ({visible, onImportWorkout, onImportCancel}) => {
     )
   };
 
+  // Function for deleting a workout from the database after it's deleted from the list
   const deleteWorkoutFromDB = async (id) => {
     try {
       await deleteWorkout(id);
       console.log('Workout deleted successfully!');
-      readWorkouts();
+      readWorkouts(); // FYI: Fetch workouts again here
     } catch (error) {
       console.error('Error deleting workout:', error.message);
     }
   };
 
+  // Async function for fetching all workouts and adding them to a list
   async function readWorkouts() {
     try{
       const dbResult = await fetchAllWorkouts();
       dbResult.forEach((workout, index) => {
-        workout.index = index + 1;
+        workout.index = index + 1; // FYI: Add index to each workout to tell them apart in the list on the screen
       })
       setWorkoutList(dbResult);
     }
@@ -56,9 +62,7 @@ const ChooseWorkout = ({visible, onImportWorkout, onImportCancel}) => {
   return (
     <View style={styles.screen}>
       <Modal visible={visible}>
-        <Text style={styles.heading}>
-          Choose a previous workout from the list below
-        </Text>
+        <Text style={styles.heading}>Choose a previous workout from the list below</Text>
         <View style={styles.buttonContainer}>
           <View style={styles.buttonStyle}>
             <TouchableOpacity 
@@ -73,7 +77,8 @@ const ChooseWorkout = ({visible, onImportWorkout, onImportCancel}) => {
         <View style={styles.listStyle}>
           <FlatList
             data={workoutList}
-            keyExtractor={(item) => item.id.toString()}
+            contentContainerStyle={{paddingBottom: 100}} // FYI: Add padding to the bottom of the list to make it wholly visible
+            keyExtractor={(item) => item.id.toString()} // FYI: Use id as key
             renderItem={({item}) => 
               <TouchableOpacity 
                 style={styles.listItem}

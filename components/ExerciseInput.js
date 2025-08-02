@@ -1,14 +1,18 @@
 import { View, Text, StyleSheet, Button, Modal, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
+// Modal component for inputting a new exercise to a list in AddExercise.js
 const ExerciseInput = ({visible, onInputExercise, onInputCancel}) => {
+  // State for exercise name in input
   const [name, setName] = useState('');
 
+  // Function for cancel button
   const cancelInputModal = () => {
     setName(''); 
     onInputCancel();
   }
 
+  // Function for add exercise button
   const inputExercise = (name) => {
     setName(''); 
     onInputExercise(name);
@@ -19,11 +23,19 @@ const ExerciseInput = ({visible, onInputExercise, onInputCancel}) => {
       <View style={styles.screen}>
         <Text style={styles.heading}>Add a new exercise</Text>
         <View>
-          <TextInput style={styles.input} placeholder="Exercise name" value={name} onChangeText={setName}/>
+          <TextInput 
+            style={styles.input}
+            placeholder="Exercise name"
+            value={name}
+            onChangeText={setName}
+          />
         </View>
         <View style={styles.buttonContainer}>
           <View style={styles.buttonStyle}>
-            <Button title="Add Exercise" onPress={() => inputExercise(name)}/>
+            <Button 
+              title="Add Exercise"
+              onPress={() => inputExercise(name)}
+            />
           </View>
           <View style={styles.buttonStyle}>
             <TouchableOpacity 
