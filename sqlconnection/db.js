@@ -29,7 +29,7 @@ export const deleteExercise = async (name) => {
 // Async function for fetching all exercises from DB in AddExercise.js
 export const fetchAllExercises = async () => {
   try{
-      const db=await init();
+      const db = await init();
       const result = await db.getAllAsync('SELECT * FROM exercises'); 
       return result;
   }

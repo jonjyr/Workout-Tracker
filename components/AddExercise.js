@@ -20,8 +20,8 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
       const dbResult = await fetchAllExercises();
       setExerciseList(dbResult);
     }
-    catch(err){
-      console.log("Reading all exercises failed! "+err.message);
+    catch (error) {
+      console.error('Reading all exercises failed: ', error.message);
     }
   };
 
@@ -42,10 +42,10 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
   async function saveExerciseToDB(name) {
     try{
       const dbResult = await saveExercise(name);
-      console.log("Adding succeeded!");
+      console.log("Saving exercise succeeded!");
     }
-    catch(err){
-      console.log("Adding failed!");
+    catch (error) {
+      console.error('Saving exercise failed: ', error.message);
     }
   };
 
