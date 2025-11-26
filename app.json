@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "projectapp",
-    "slug": "projectapp",
+    "name": "workout_trakcer",
+    "slug": "workout_tracker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
