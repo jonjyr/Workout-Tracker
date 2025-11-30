@@ -1,100 +1,11 @@
 import { View, Text, Button, FlatList, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
 import { Swipeable } from 'react-native-gesture-handler';
 import AddExercise from './components/AddExercise';
 import ChooseWorkout from './components/ChooseWorkout';
-import { saveWorkout } from './sqlconnection/db';
+import { useWorkoutLogic } from './hooks/UseWorkoutLogic';
 
 export default function App() {
-  // State for the list of exercises
-  const [exercises, setExercises] = useState([]);
-
-  // States for modal visibility
-  const [showAddExerciseModal, setShowAddExerciseModal] = useState(false);
-  const [showExerciseInputModal, setShowExerciseInputModal] = useState(false);
-  const [showChooseWorkoutModal, setShowChooseWorkoutModal] = useState(false);
-
-  // Function for adding a new exercise from AddExercise.js (with validation)
-  const addExercise = (name) => {
-    if (exercises.find(exercise => exercise.name.toLowerCase() === name.toLowerCase())) { // FYI: Validation to check if exercise already exists in the list
-      alert('Exercise already exists');
-      return;
-    }
-    const newExercise = {
-      name,
-      sets: []
-    }
-    setExercises(exercises => [...exercises, newExercise]);
-    setShowAddExerciseModal(false);
-    setShowExerciseInputModal(false);
-  };
-
-  // Function for adding a new set to an exercise in the list with 'Add set' button
-  const addSet = (name) => {
-    setExercises(exercises =>
-      exercises.map(exercise => {
-        if (exercise.name === name) {
-          return {
-            ...exercise,
-            sets: [...exercise.sets, {weight: '', reps: ''}]
-          };
-        };
-        return exercise;
-      })
-    );
-  };
-
-  // Function for updating the weight or reps of a set in the list when changing them in the TextInput
-  const updateSets = (name, index, key, value) => {
-    setExercises(exercises =>
-      exercises.map(exercise => {
-        if (exercise.name !== name) return exercise;
-        const newSets = [...exercise.sets];
-        newSets[index] = {...newSets[index], [key]: value};
-        return {...exercise, sets: newSets};
-      })
-    );
-  };
-
-  // Function for deleting a whole exercise from the list after swiping left and pressing 'Delete'
-  const deleteExercise = (name) => {
-    setExercises(exercises => exercises.filter(exercise => exercise.name !== name));
-  };
-
-  // Function for deleting a set from an exercise in the list after swiping left and pressing 'Delete'
-  const deleteSet = (name, index) => {
-    setExercises(exercises =>
-      exercises.map(exercise => {
-        if (exercise.name !== name) return exercise;
-        const newSets = [...exercise.sets];
-        newSets.splice(index, 1);
-        return {...exercise, sets: newSets};
-      })
-    );
-  };
-
-  // Function for importing a workout from ChooseWorkout.js
-  const importWorkout = (workout) => {
-    try {
-      const importedExercises = workout.data;
-      setExercises(importedExercises);
-      setShowChooseWorkoutModal(false);
-    } catch (error) {
-      console.error('Error importing workout:', error.message);
-    }
-  }
-
-  // Async function for saving a workout to the database after pressing 'Save Workout'
-  const saveWorkoutToDB = async () => {
-    try {
-      const date = new Date().toISOString(); // FYI: Get current date for the workout
-      await saveWorkout(exercises, date);
-      alert('Workout saved successfully!');
-      setExercises([]); // FYI: Clear the list of exercises after saving the workout
-    } catch (error) {
-      console.error('Error saving workout:', error.message);
-    }
-  }
+  const { exercises, modals, toggleModal, handlers } = useWorkoutLogic();
 
   return ( 
     <View style={styles.screen}>
@@ -102,13 +13,13 @@ export default function App() {
         <View style={styles.buttonStyle}>
           <Button 
             title="Import Workout"
-            onPress={() => setShowChooseWorkoutModal(true)}
+            onPress={() => toggleModal('chooseWorkout', true)}
           />
         </View>
         <View style={styles.buttonStyle}>
           <Button 
             title="Save Workout"
-            onPress={saveWorkoutToDB}
+            onPress={handlers.saveWorkoutToDB}
           />
         </View>
       </View>
@@ -118,18 +29,18 @@ export default function App() {
       <View style={styles.bottomButtonContainer}>
         <Button 
           title="Add Exercise"
-          onPress={() => setShowAddExerciseModal(true)}
+          onPress={() => toggleModal('addExercise', true)}
         />
       </View>
       <View style={styles.listStyle}>
         <FlatList
           data={exercises}
-          contentContainerStyle={{paddingBottom: 100}} // FYI: Add padding to the bottom of the list to make it wholly visible
+          contentContainerStyle={{paddingBottom: 100}}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) =>
             <Swipeable
-              renderRightActions={() => ( // FYI: Swipeable component from react-native-gesture-handler to enable left swiping the list item to show delete button
-                <TouchableOpacity onPress={() => deleteExercise(item.name)}>
+              renderRightActions={() => ( 
+                <TouchableOpacity onPress={() => handlers.deleteExercise(item.name)}>
                   <Text style={styles.deleteButton}>Delete</Text>
                 </TouchableOpacity>
               )}    
@@ -140,7 +51,7 @@ export default function App() {
                   <View style={styles.setButton}>
                     <Button 
                       title="Add set"
-                      onPress={() => addSet(item.name)}
+                      onPress={() => handlers.addSet(item.name)}
                     />
                   </View>
                 </View>
@@ -151,7 +62,7 @@ export default function App() {
                       renderRightActions={() => ( // FYI: Another Swipeable component to enable left swiping and deleting the individual sets 
                         <TouchableOpacity 
                           style={styles.deleteButton}
-                          onPress={() => deleteSet(item.name, index)}
+                          onPress={() => handlers.deleteSet(item.name, index)}
                         >
                           <Text>Delete</Text>
                         </TouchableOpacity>
@@ -165,7 +76,7 @@ export default function App() {
                             style={styles.input}
                             keyboardType="numeric"
                             value={set.weight}
-                            onChangeText={(text) => updateSets(item.name, index, 'weight', text)}
+                            onChangeText={(text) => handlers.updateSets(item.name, index, 'weight', text)}
                           />
                         </View>
                         <View style={styles.setInputContainer}>
@@ -174,7 +85,7 @@ export default function App() {
                             style={styles.input}
                             keyboardType="numeric"
                             value={set.reps}
-                            onChangeText={(text) => updateSets(item.name, index, 'reps', text)}
+                            onChangeText={(text) => handlers.updateSets(item.name, index, 'reps', text)}
                           />
                         </View>
                       </View>
@@ -186,17 +97,17 @@ export default function App() {
           }
         />
       </View>
-      <AddExercise // FYI: Modal component AddExercise.js for adding a new exercise
-        visible={showAddExerciseModal}
-        onAddExercise={addExercise}
-        onCancel={() => setShowAddExerciseModal(false)}
-        showExerciseInputModal={showExerciseInputModal}
-        setShowExerciseInputModal={setShowExerciseInputModal}
+      <AddExercise
+        visible={modals.addExercise}
+        onAddExercise={handlersaddExercise}
+        onCancel={() => toggleModal('addExercise', false)}
+        showExerciseInputModal={modals}
+        setShowExerciseInputModal={(value) => toggleModal('exerciseInput', value)}
       />
-      <ChooseWorkout // FYI: Modal component ChooseWorkout.js for importing a saved workout
-        visible={showChooseWorkoutModal}
-        onImportWorkout={importWorkout}
-        onImportCancel={() => setShowChooseWorkoutModal(false)}
+      <ChooseWorkout
+        visible={modals.chooseWorkout}
+        onImportWorkout={handlers.importWorkout}
+        onImportCancel={() => toggleModal('chooseWorkout', false)}
       />
     </View>
   );
