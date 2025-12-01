@@ -1,7 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 
 // Async function for initializing the database and creating tables if they don't exist
-// FYI: Use useNewConnection to not crash when database is emptied
+// Use useNewConnection to not crash when database is emptied
 export const init = async() => {
   const db = await SQLite.openDatabaseAsync('exercises.db', { useNewConnection: true });
   await db.execAsync('PRAGMA journal_mode = WAL;' +
@@ -42,7 +42,7 @@ export const fetchAllExercises = async () => {
 export const saveWorkout = async (exercises, date) => {
   const db = await init();
   const statement = await db.prepareAsync('INSERT INTO workouts (data, date) VALUES ($data, $date)');
-  await statement.executeAsync({ $data: JSON.stringify(exercises), $date: date }); // FYI: Stringify data from JSON here
+  await statement.executeAsync({ $data: JSON.stringify(exercises), $date: date });
   await statement.finalizeAsync();
 };
 
@@ -59,7 +59,7 @@ export const fetchAllWorkouts = async() => {
   try{
       const db = await init();
       const result = await db.getAllAsync('SELECT * FROM workouts');
-      return result.map(workout => ({...workout, data: JSON.parse(workout.data)})); // FYI: Convert data to JSON here
+      return result.map(workout => ({...workout, data: JSON.parse(workout.data)}));
   }
   catch (error) {
       throw new Error("Error fetching workouts: " + error.message); 

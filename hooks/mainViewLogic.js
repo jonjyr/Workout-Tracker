@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { saveWorkout } from '../sqlconnection/db';
 
-export const useWorkoutLogic = () => {
+export const mainViewLogic = () => {
     const [exercises, setExercises] = useState([]);
     const [modals, setModals] = useState({
         addExercise: false,
@@ -14,7 +14,7 @@ export const useWorkoutLogic = () => {
     };
 
     const addExercise = (name) => {
-        if (exercises.find(exercises.name.toLowerCases() === name.toLowerCase())) {
+        if (exercises.find((exercise) => exercise.name.toLowerCase() === name.toLowerCase())) {
             alert('Exercise already exists');
             return;
         };

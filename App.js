@@ -2,10 +2,11 @@ import { View, Text, Button, FlatList, StyleSheet, TextInput, TouchableOpacity }
 import { Swipeable } from 'react-native-gesture-handler';
 import AddExercise from './components/AddExercise';
 import ChooseWorkout from './components/ChooseWorkout';
-import { useWorkoutLogic } from './hooks/UseWorkoutLogic';
+import { mainViewLogic } from './hooks/mainViewLogic';
+import { mainStyles as styles } from './styles/mainStyles';
 
 export default function App() {
-  const { exercises, modals, toggleModal, handlers } = useWorkoutLogic();
+  const { exercises, modals, toggleModal, handlers } = mainViewLogic();
 
   return ( 
     <View style={styles.screen}>
@@ -32,6 +33,7 @@ export default function App() {
           onPress={() => toggleModal('addExercise', true)}
         />
       </View>
+      
       <View style={styles.listStyle}>
         <FlatList
           data={exercises}
@@ -59,7 +61,7 @@ export default function App() {
                   {item.sets.map((set, index) => (
                     <Swipeable
                       key={index}
-                      renderRightActions={() => ( // FYI: Another Swipeable component to enable left swiping and deleting the individual sets 
+                      renderRightActions={() => (
                         <TouchableOpacity 
                           style={styles.deleteButton}
                           onPress={() => handlers.deleteSet(item.name, index)}
@@ -97,9 +99,10 @@ export default function App() {
           }
         />
       </View>
+
       <AddExercise
         visible={modals.addExercise}
-        onAddExercise={handlersaddExercise}
+        onAddExercise={handlers.addExercise}
         onCancel={() => toggleModal('addExercise', false)}
         showExerciseInputModal={modals}
         setShowExerciseInputModal={(value) => toggleModal('exerciseInput', value)}
@@ -112,126 +115,3 @@ export default function App() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    paddingBottom: 100,
-    backgroundColor: '#F7F9FB',
-  },
-  topButtonContainer: {
-    marginTop: 40,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  headingContainer: {
-    marginTop: 20,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  heading: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: 'skyblue',
-    padding: 10,
-  },
-  bottomButtonContainer: {
-    marginTop: 20,
-    width: '30%',
-    alignSelf: 'center',
-  },
-  buttonStyle: {
-    width: '35%',
-  },
-  listStyle: {
-    marginTop: 20,
-  },
-  listItem: {
-    width: '90%',
-    borderWidth: 1,
-    borderRadius: 10,
-    alignSelf: 'center',
-    padding: 5,
-    marginBottom: 10,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    backgroundColor: 'white',
-  },
-  setButton: {
-    width: '21%',
-    margin: 2,
-  },
-  listExercise: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  exerciseName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: 10,
-    textShadowColor: 'rgba(0, 0, 0, 0.25)',
-    textShadowOffset: {width: 0, height: 1},
-    textShadowRadius: 2,
-  },
-  setListItem: {
-    width: '90%',
-    height: 50,
-    borderWidth: 0.75,
-    borderRadius: 10,
-    backgroundColor: '#D9F4F2',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    alignSelf: 'center',
-    paddingLeft: 5,
-    marginTop: 5,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  setNumber: {
-    fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.25)',
-    textShadowOffset: {width: 0, height: 1},
-    textShadowRadius: 2,
-  },
-  setInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  input: {
-    width: 40,
-    height: 40,
-    textAlign: 'center',
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-    backgroundColor: 'white',
-    color: 'black',
-  },
-  deleteButton: {
-    padding: 4,
-    backgroundColor: '#FF6B6B',
-    alignSelf: 'center',
-    borderRadius: 5,
-  },
-});
