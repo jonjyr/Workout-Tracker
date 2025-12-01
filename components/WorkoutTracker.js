@@ -1,9 +1,10 @@
-import { View, Text, Button, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import AddExercise from './AddExercise';
 import ChooseWorkout from './ChooseWorkout';
 import { mainViewLogic } from '../hooks/mainViewLogic';
 import { mainStyles as styles } from '../styles/mainStyles';
+import AppButton from './AppButton';
 
 const WorkoutTracker = () => {
   const { exercises, modals, toggleModal, handlers } = mainViewLogic();
@@ -12,15 +13,21 @@ const WorkoutTracker = () => {
     <View style={styles.screen}>
       <View style={styles.topButtonContainer}>
         <View style={styles.buttonStyle}>
-          <Button 
-            title="Import Workout"
+          <AppButton 
             onPress={() => toggleModal('chooseWorkout', true)}
+            title="Import Workout"
+            variant="primary"
+            style={styles.buttonStyle}
+            textStyle={styles.buttonText}
           />
         </View>
         <View style={styles.buttonStyle}>
-          <Button 
-            title="Save Workout"
+          <AppButton 
             onPress={handlers.saveWorkoutToDB}
+            title="Save Workout"
+            style={styles.buttonStyle}
+            textStyle={styles.buttonText}
+            variant="primary"
           />
         </View>
       </View>
@@ -28,9 +35,12 @@ const WorkoutTracker = () => {
         <Text style={styles.heading}>🏋🏻 Awesome Workout Tracker 🏋🏻</Text>
       </View>
       <View style={styles.bottomButtonContainer}>
-        <Button 
-          title="Add Exercise"
+        <AppButton 
           onPress={() => toggleModal('addExercise', true)}
+          title="Add Exercise"
+          variant="primary"
+          style={styles.buttonStyle}
+          textStyle={styles.buttonText}
         />
       </View>
       
@@ -51,9 +61,12 @@ const WorkoutTracker = () => {
                 <View style={styles.listExercise}>
                   <Text style={styles.exerciseName}>{item.name}</Text>
                   <View style={styles.setButton}>
-                    <Button 
-                      title="Add set"
+                    <AppButton 
                       onPress={() => handlers.addSet(item.name)}
+                      title="Add set"
+                      style={styles.setButton}
+                      textStyle={styles.setButtonText}
+                      variant="secondary"
                     />
                   </View>
                 </View>
@@ -73,7 +86,8 @@ const WorkoutTracker = () => {
                       <View style={styles.setListItem}>
                         <Text style={styles.setNumber}>Set {index + 1}:</Text>
                         <View style={styles.setInputContainer}>
-                          <Text>Weight: </Text>
+                          <Text style={styles.inputLabel}
+                          >Weight: </Text>
                           <TextInput
                             style={styles.input}
                             keyboardType="numeric"
@@ -82,7 +96,8 @@ const WorkoutTracker = () => {
                           />
                         </View>
                         <View style={styles.setInputContainer}>
-                          <Text>Reps: </Text>
+                          <Text style={styles.inputLabel}
+                          >Reps: </Text>
                           <TextInput
                             style={styles.input}
                             keyboardType="numeric"

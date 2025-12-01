@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Modal, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, Modal, FlatList, TouchableOpacity, Alert } from 'react-native';
 import ExerciseInput from './ExerciseInput';
 import { init, saveExercise, fetchAllExercises, deleteExercise } from '../sqlconnection/db';
+import { AppButton } from './AppButton';
 
 // Modal component for choosing or adding a new exercise from a list to App.js
 const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, setShowExerciseInputModal}) => {
@@ -87,9 +88,12 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
         <Text style={styles.heading}>Choose an exercise from the list below or add a new one</Text>
         <View style={styles.buttonContainer}>
           <View style={styles.buttonStyle}>
-            <Button 
-              title="Add New Exercise"
+            <AppButton 
               onPress={() => setShowExerciseInputModal(true)}
+              title="Add New Exercise"
+              style={styles.buttonStyle}
+              textStyle={styles.buttonText}
+              variant="primary"
             />         
           </View>
           <View style={styles.buttonStyle}>

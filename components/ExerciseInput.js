@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, Button, Modal, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
+import { AppButton } from './AppButton';
 
 // Modal component for inputting a new exercise to a list in AddExercise.js
 const ExerciseInput = ({visible, onInputExercise, onInputCancel}) => {
@@ -32,9 +33,12 @@ const ExerciseInput = ({visible, onInputExercise, onInputCancel}) => {
         </View>
         <View style={styles.buttonContainer}>
           <View style={styles.buttonStyle}>
-            <Button 
-              title="Add Exercise"
+            <AppButton 
               onPress={() => inputExercise(name)}
+              title="Add Exercise"
+              style={styles.setButton}
+              textStyle={styles.setButtonText}
+              variant="secondary"
             />
           </View>
           <View style={styles.buttonStyle}>

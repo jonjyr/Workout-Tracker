@@ -1,124 +1,128 @@
 import {StyleSheet} from 'react-native';
+import { colors, spacing, typography } from './theme';
 
 export const mainStyles = StyleSheet.create({
-    screen: {
+  screen: {
     flex: 1,
-    paddingBottom: 100,
-    backgroundColor: '#F7F9FB',
+    backgroundColor: colors.background,
+    paddingHorizontal: spacing.m,
+    paddingTop: 60, // Safe area handling
   },
-  topButtonContainer: {
-    marginTop: 40,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
+
+  // Header
   headingContainer: {
-    marginTop: 20,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    marginBottom: spacing.l,
+    alignItems: 'center',
   },
   heading: {
-    fontSize: 15,
-    fontWeight: 'bold',
+    ...typography.header,
     textAlign: 'center',
-    backgroundColor: 'skyblue',
-    padding: 10,
   },
-  bottomButtonContainer: {
-    marginTop: 20,
-    width: '30%',
-    alignSelf: 'center',
+
+  // Button Containers
+  topButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: spacing.m,
   },
   buttonStyle: {
-    width: '35%',
+    width: '48%',
   },
+  bottomButtonContainer: {
+    marginTop: spacing.s,
+    marginBottom: spacing.l,
+    width: '100%',
+  },
+
+  // List Styling
   listStyle: {
-    marginTop: 20,
+    flex: 1,
   },
   listItem: {
-    width: '90%',
-    borderWidth: 1,
-    borderRadius: 10,
-    alignSelf: 'center',
-    padding: 5,
-    marginBottom: 10,
-    elevation: 5,
-    shadowColor: '#000',
+    backgroundColor: colors.surface,
+    borderRadius: spacing.borderRadius,
+    padding: spacing.m,
+    marginBottom: spacing.m,
+    shadowColor: colors.primary,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    backgroundColor: 'white',
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+    borderLeftWidth: 5,
+    borderLeftColor: colors.secondary,
   },
-  setButton: {
-    width: '21%',
-    margin: 2,
-  },
+
+  // Exercise header inside card
   listExercise: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: spacing.s,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.background,
+    paddingBottom: spacing.s,
   },
   exerciseName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: 10,
-    textShadowColor: 'rgba(0, 0, 0, 0.25)',
-    textShadowOffset: {width: 0, height: 1},
-    textShadowRadius: 2,
+    ...typography.subHeader,
+    color: colors.primary,
   },
+
+  // Set row
   setListItem: {
-    width: '90%',
-    height: 50,
-    borderWidth: 0.75,
-    borderRadius: 10,
-    backgroundColor: '#D9F4F2',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    alignSelf: 'center',
-    paddingLeft: 5,
-    marginTop: 5,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    paddingVertical: spacing.s,
+    backgroundColor: colors.background,
+    borderRadius: 8,
+    paddingHorizontal: spacing.s,
+    marginTop: spacing.s,
   },
   setNumber: {
+    ...typography.body,
     fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.25)',
-    textShadowOffset: {width: 0, height: 1},
-    textShadowRadius: 2,
+    width: 50,
   },
+
+  // Inputs
   setInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 5,
+  },
+  inputLabel: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginRight: 4,
   },
   input: {
-    width: 40,
+    width: 50,
     height: 40,
     textAlign: 'center',
     borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-    backgroundColor: 'white',
-    color: 'black',
+    borderColor: colors.border,
+    borderRadius: 8,
+    backgroundColor: colors.white,
+    color: colors.textPrimary,
+    fontSize: 16,
   },
+
+  // Swipe action
   deleteButton: {
-    padding: 4,
-    backgroundColor: '#FF6B6B',
-    alignSelf: 'center',
-    borderRadius: 5,
+    backgroundColor: colors.danger,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+    height: '85%',
+    borderRadius: spacing.borderRadius,
+    marginTop: 0,
+    marginLeft: 10,
   },
+  deleteButtonText: {
+    color: colors.white,
+    fontWeight: 'bold',
+  }
 });
