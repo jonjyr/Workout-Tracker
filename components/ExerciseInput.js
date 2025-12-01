@@ -1,6 +1,8 @@
-import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Modal, TextInput } from 'react-native';
 import { useState } from 'react';
 import { AppButton } from './AppButton';
+import { mainStyles as styles } from '../styles/mainStyles';
+import { colors } from '../styles/theme';
 
 // Modal component for inputting a new exercise to a list in AddExercise.js
 const ExerciseInput = ({visible, onInputExercise, onInputCancel}) => {
@@ -8,92 +10,49 @@ const ExerciseInput = ({visible, onInputExercise, onInputCancel}) => {
   const [name, setName] = useState('');
 
   // Function for cancel button
-  const cancelInputModal = () => {
+  const cancelInputScreen = () => {
     setName(''); 
     onInputCancel();
   }
 
   // Function for add exercise button
-  const inputExercise = (name) => {
-    setName(''); 
+  const inputExercise = () => {
+    if (!name.trim()) return;
     onInputExercise(name);
+    setName('');
   }
 
   return (
-    <Modal visible={visible}>
-      <View style={styles.screen}>
-        <Text style={styles.heading}>Add a new exercise</Text>
-        <View>
-          <TextInput 
+    <Modal visible={visible} transparent={true} animationType="fade">
+      <View style={styles.inputScreen}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.heading}>Create New Exercise</Text>
+          <TextInput
             style={styles.input}
             placeholder="Exercise name"
+            placeholderTextColor={colors.textSecondary}
             value={name}
             onChangeText={setName}
+            autoFocus={true}
           />
-        </View>
-        <View style={styles.buttonContainer}>
-          <View style={styles.buttonStyle}>
+          <View style={styles.actionBar}>
             <AppButton 
-              onPress={() => inputExercise(name)}
-              title="Add Exercise"
-              style={styles.setButton}
-              textStyle={styles.setButtonText}
-              variant="secondary"
+              onPress={inputExercise}
+              title="Create"
+              style={styles.actionButton}
+              variant="primary"
             />
-          </View>
-          <View style={styles.buttonStyle}>
-            <TouchableOpacity 
-              style={styles.cancelStyle}
-              onPress={() => cancelInputModal()}
-            >
-              <Text style={styles.cancelText}>Cancel</Text>
-            </TouchableOpacity>  
+            <AppButton
+              onPress={cancelInputScreen}
+              title="Cancel"
+              style={styles.actionButton}
+              variant="cancel"
+            />
           </View>
         </View>
       </View>
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-  heading: {
-    marginTop: 20,
-    fontSize: 15,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: 'skyblue',
-    padding: 10,
-  },
-  input: {
-    width: '90%',
-    borderWidth: 2,
-    borderColor: 'black',
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-  buttonContainer: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  buttonStyle: {
-    width: '30%',
-  },
-  cancelStyle: {
-    borderWidth: 1,
-    padding: 7,
-    borderColor: '#565656',
-  },
-  cancelText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    textAlign: 'center',
-    color: '#565656',
-  },
-});
 
 export default ExerciseInput;

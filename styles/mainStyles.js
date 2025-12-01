@@ -10,6 +10,23 @@ export const mainStyles = StyleSheet.create({
     paddingTop: 60, // Safe area handling
   },
 
+  // Input Screen
+  inputScreen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.overlay,
+    padding: spacing.m,
+  },
+
+  // Modal Screen
+  modalScreen: {
+    flex: 1,
+    backgroundColor: colors.background,
+    paddingTop: 40,
+    paddingHorizontal: spacing.m,
+  },
+
   // Header
   headingContainer: {
     paddingHorizontal: spacing.m,
@@ -19,6 +36,43 @@ export const mainStyles = StyleSheet.create({
     ...typography.header,
     marginBottom: spacing.l,
     textAlign: 'center',
+  },
+  subHeading: {
+    ...typography.subheader,
+    bottom: spacing.l,
+    marginBottom: spacing.m,
+    textAlign: 'center',
+  },
+
+  // Inputs
+  input: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: spacing.borderRadius,
+    padding: spacing.m,
+    fontSize: 16,
+    color: colors.textPrimary,
+    width: '100%',
+    marginBottom: spacing.m,
+    alignSelf: 'center',
+  },
+  inputContainer: {
+    width: '90%',
+    backgroundColor: colors.surface,
+    borderRadius: spacing.borderRadius,
+    padding: spacing.m,
+    marginBottom: spacing.m,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.primary,
   },
 
   // Action Bar
@@ -32,13 +86,18 @@ export const mainStyles = StyleSheet.create({
   actionButton: {
     flex: 1,
   },
+  singleActionButton: {
+    width: '50%',
+    alignSelf: 'center',
+    marginBottom: spacing.l,
+  },
 
   // Main List
   listContent: {
     paddingHorizontal: spacing.m,
   },
 
-  // Exercise Card
+  // Cards
   card: {
     backgroundColor: colors.surface,
     borderRadius: spacing.borderRadius,
@@ -66,6 +125,21 @@ export const mainStyles = StyleSheet.create({
   },
   exerciseTitle: {
     ...typography.cardHeader,
+  },
+  listItemCard: {
+    backgroundColor: colors.surface,
+    borderRadius: spacing.borderRadius,
+    padding: spacing.m,
+    marginBottom: spacing.s,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  listItemText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.textPrimary,
+    textAlign: 'center',
   },
 
   // Set Rows

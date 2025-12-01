@@ -7,9 +7,11 @@ export const AppButton = ({ onPress, title, style, textStyle, variant = 'primary
     : variant === 'outline' ? 'transparent'
     : variant === 'primaryDark' ? colors.primaryDark
     : variant === 'success' ? colors.success
+    : variant === 'cancel' ? colors.background
     : colors.primary;
 
   const TextColor = variant === 'outline' ? colors.primary
+    : variant === 'cancel' ? colors.textSecondary
     : colors.white;
   const border = variant === 'outline' ? {
     borderWidth: 1,

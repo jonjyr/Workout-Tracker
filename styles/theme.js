@@ -30,6 +30,12 @@ export const typography = {
         color: colors.primary,
         letterSpacing: -0.5,
     },
+    subheader: {
+        fontSize: 20,
+        fontWeight: '700',
+        color: colors.textPrimary,
+        opacity: 0.5,
+    },
     cardHeader: {
         fontSize: 18,
         fontWeight: '700',

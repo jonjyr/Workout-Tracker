@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Modal, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Modal, FlatList, TouchableOpacity, Alert } from 'react-native';
 import ExerciseInput from './ExerciseInput';
 import { init, saveExercise, fetchAllExercises, deleteExercise } from '../sqlconnection/db';
 import { AppButton } from './AppButton';
+import { mainStyles as styles } from '../styles/mainStyles';
 
 // Modal component for choosing or adding a new exercise from a list to App.js
 const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, setShowExerciseInputModal}) => {
@@ -29,7 +30,7 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
   // Async function for adding a new exercise from ExerciseInput.js to the DB and to the list of exercises 
   const inputExercise = async (exercise) => {
     try {
-      await saveExerciseToDB(exercise); // FYI: Function to save exercise to DB called here
+      await saveExerciseToDB(exercise);
       const updatedList = await fetchAllExercises();
       setExerciseList(updatedList);
     } catch (error) {
@@ -43,7 +44,6 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
   async function saveExerciseToDB(name) {
     try{
       const dbResult = await saveExercise(name);
-      console.log("Saving exercise succeeded!");
     }
     catch (error) {
       console.error('Saving exercise failed: ', error.message);
@@ -54,14 +54,13 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
   const deleteExerciseFromDB = (exercise) => {
     Alert.alert(
       "Delete Exercise",
-      `Are you sure you want to delete the exercise '${exercise}' from the list?`,
+      `Are you sure you want to delete the exercise '${exercise}'?`,
       [
         {
           text: "Cancel",
           style: "cancel"
         },
         { text: "OK",
-          // FYI: Async function for deleting exercise from DB here after pressing OK
           onPress: async () => {
             try {
               await deleteExercise(exercise);
@@ -77,125 +76,48 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
     )
   };
 
-  // Function for cancel button
-  const cancelInputModal = () => {
-    setShowExerciseInputModal(false);
-  };
-
   return (
-    <View style={styles.screen}>
-      <Modal visible={visible}>
-        <Text style={styles.heading}>Choose an exercise from the list below or add a new one</Text>
-        <View style={styles.buttonContainer}>
-          <View style={styles.buttonStyle}>
-            <AppButton 
-              onPress={() => setShowExerciseInputModal(true)}
-              title="Add New Exercise"
-              style={styles.buttonContainer}
-              textStyle={styles.textStyle}
-              variant="primary"
-            />         
-          </View>
-          <View style={styles.buttonStyle}>
-            <TouchableOpacity 
-              style={styles.cancelStyle}
-              onPress={onCancel}
-            >
-              <Text style={styles.cancelText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.listStyle}>
-          <FlatList
-            data={exerciseList}
-            contentContainerStyle={{paddingBottom: 100}} // FYI: Add padding to the bottom of the list to make it wholly visible
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({item}) => 
-              <TouchableOpacity 
-                style={styles.listItem}
-                onPress={() => onAddExercise(item.name)}
-                onLongPress={() => deleteExerciseFromDB(item.name)}
-              >
-                <Text style={styles.textStyle}>{item.name}</Text>
-              </TouchableOpacity>
-            }
+    <Modal visible={visible} animationType="slide">
+      <View style={styles.modalScreen}>
+        <Text style={styles.heading}>Select or Create Exercise</Text>
+        <Text style={styles.subHeading}>(long press to delete)</Text>
+        <View style={styles.actionBar}>
+          <AppButton 
+            onPress={() => setShowExerciseInputModal(true)}
+            title="Create New Exercise"
+            style={styles.actionButton}
+            textStyle={styles.textStyle}
+            variant="primary"
           />
+          <AppButton 
+              style={styles.actionButton}
+              title="Cancel"
+              onPress={onCancel}
+              variant="cancel"
+            />
         </View>
-      </Modal>
-      <ExerciseInput // FYI: Modal component ExerciseInput.js for inputting a new exercise called here
-        visible={showExerciseInputModal} 
-        onInputExercise={inputExercise}
-        onInputCancel={cancelInputModal}
-      />
-    </View>
+        <FlatList
+          data={exerciseList}
+          contentContainerStyle={styles.listContent}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => 
+            <TouchableOpacity 
+              style={styles.listItemCard}
+              onPress={() => onAddExercise(item.name)}
+              onLongPress={() => deleteExerciseFromDB(item.name)}
+            >
+              <Text style={styles.listItemText}>{item.name}</Text>
+            </TouchableOpacity>
+          }
+          />
+        <ExerciseInput
+          visible={showExerciseInputModal} 
+          onInputExercise={inputExercise}
+          onInputCancel={() => setShowExerciseInputModal(false)}
+        />
+      </View>
+    </Modal>
   )
 }
-
-const styles = StyleSheet.create({
-    screen: {
-      flex: 1,
-      paddingBottom: 100,
-    },
-    heading: {
-      marginTop: 20,
-      fontSize: 15,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      backgroundColor: 'skyblue',
-      padding: 10,
-    },
-    buttonContainer: {
-      marginTop: 20,
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-    },
-    buttonStyle: {
-      width: '35%',
-    },
-    cancelStyle: {
-      borderWidth: 1,
-      padding: 7,
-      borderColor: '#565656',
-    },
-    cancelText: {
-      fontSize: 14,
-      fontWeight: 'bold',
-      textTransform: 'uppercase',
-      textAlign: 'center',
-      color: '#565656',
-    },
-    listStyle: {
-      marginTop: 20,
-      flex: 1,
-    },
-    listItem: {
-      width: '90%',
-      borderWidth: 1,
-      alignSelf: 'center',
-      backgroundColor: '#D9F4F2',
-      elevation: 5,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      borderRadius: 10,
-      padding: 2,
-      margin: 3,
-    },
-    textStyle: {
-      fontSize: 15,
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-    deleteButton: {
-      fontSize: 15,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      color: '#FF6B6B',
-    },
-});
 
 export default AddExercise;
