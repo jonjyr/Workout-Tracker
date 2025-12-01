@@ -32,7 +32,7 @@ export const mainViewLogic = () => {
             if (exercise.name === exerciseName) {
                 return {
                     ...exercise,
-                    sers: [...exercise.sets, {weight: '', reps: ''}]
+                    sets: [...exercise.sets, {weight: '', reps: ''}]
                 };
             }
             return exercise;
