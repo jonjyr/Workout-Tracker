@@ -4,114 +4,116 @@ import AddExercise from './AddExercise';
 import ChooseWorkout from './ChooseWorkout';
 import { mainViewLogic } from '../hooks/mainViewLogic';
 import { mainStyles as styles } from '../styles/mainStyles';
-import AppButton from './AppButton';
+import { colors } from '../styles/theme';
+import { AppButton } from './AppButton';
 
 const WorkoutTracker = () => {
   const { exercises, modals, toggleModal, handlers } = mainViewLogic();
 
+  // Function to render the right actions for the Swipeable component
+  const renderCardRightActions = (exerciseName) => (
+    <TouchableOpacity
+      style={styles.deleteAction}
+      onPress={() => handlers.deleteExercise(exerciseName)}
+    >
+      <Text style={styles.deleteText}>DELETE</Text>
+    </TouchableOpacity>
+  );
+
+  const renderSetRightActions = (exerciseName, index) => (
+    <TouchableOpacity
+      style={styles.setDeleteAction}
+      onPress={() => handlers.deleteSet(exerciseName, index)}
+    >
+      <Text style={[styles.deleteText, {fontSize: 12}]}>DEL</Text>
+    </TouchableOpacity>
+  );
+
   return ( 
     <View style={styles.screen}>
-      <View style={styles.topButtonContainer}>
-        <View style={styles.buttonStyle}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.heading}>🏋️ Workout Tracker 🏋️</Text>
+        <View style={styles.actionBar}>
           <AppButton 
             onPress={() => toggleModal('chooseWorkout', true)}
-            title="Import Workout"
+            title="Add Workout"
             variant="primary"
-            style={styles.buttonStyle}
-            textStyle={styles.buttonText}
+            style={styles.actionButton}
           />
-        </View>
-        <View style={styles.buttonStyle}>
           <AppButton 
             onPress={handlers.saveWorkoutToDB}
-            title="Save Workout"
-            style={styles.buttonStyle}
-            textStyle={styles.buttonText}
-            variant="primary"
+            title="Finish & Save"
+            variant="success"
+            style={styles.actionButton}
           />
         </View>
       </View>
-      <View style={styles.headingContainer}>
-        <Text style={styles.heading}>🏋🏻 Awesome Workout Tracker 🏋🏻</Text>
-      </View>
-      <View style={styles.bottomButtonContainer}>
-        <AppButton 
-          onPress={() => toggleModal('addExercise', true)}
-          title="Add Exercise"
-          variant="primary"
-          style={styles.buttonStyle}
-          textStyle={styles.buttonText}
-        />
-      </View>
       
-      <View style={styles.listStyle}>
-        <FlatList
-          data={exercises}
-          contentContainerStyle={{paddingBottom: 100}}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) =>
-            <Swipeable
-              renderRightActions={() => ( 
-                <TouchableOpacity onPress={() => handlers.deleteExercise(item.name)}>
-                  <Text style={styles.deleteButton}>Delete</Text>
-                </TouchableOpacity>
-              )}    
-            >
-              <View style={styles.listItem}>
-                <View style={styles.listExercise}>
-                  <Text style={styles.exerciseName}>{item.name}</Text>
-                  <View style={styles.setButton}>
-                    <AppButton 
-                      onPress={() => handlers.addSet(item.name)}
-                      title="Add set"
-                      style={styles.setButton}
-                      textStyle={styles.setButtonText}
-                      variant="secondary"
-                    />
-                  </View>
-                </View>
-                <View>
-                  {item.sets.map((set, index) => (
-                    <Swipeable
-                      key={index}
-                      renderRightActions={() => (
-                        <TouchableOpacity 
-                          style={styles.deleteButton}
-                          onPress={() => handlers.deleteSet(item.name, index)}
-                        >
-                          <Text>Delete</Text>
-                        </TouchableOpacity>
-                      )}
-                    >
-                      <View style={styles.setListItem}>
-                        <Text style={styles.setNumber}>Set {index + 1}:</Text>
-                        <View style={styles.setInputContainer}>
-                          <Text style={styles.inputLabel}
-                          >Weight: </Text>
+      <FlatList
+        data={exercises}
+        style={styles.listStyle}
+        contentContainerStyle={styles.listContent}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => (
+          <Swipeable renderRightActions={() => renderCardRightActions(item.name)}>
+            <View style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.exerciseTitle}>{item.name}</Text>
+                <AppButton 
+                  onPress={() => handlers.addSet(item.name)}
+                  title="Add Set"
+                  variant="secondary"
+                  style={{paddingVertical: 6, paddingHorizontal: 12, borderRadius: 8}}
+                  textStyle={{fontSize: 12}}
+                />
+              </View>
+              <View>
+                {item.sets.map((set, index) => (
+                  <Swipeable
+                    key={`${item.name}-${index}`}
+                    renderRightActions={() => renderSetRightActions(item.name, index)}
+                  >
+                    <View style={styles.setRow}>
+                      <Text style={styles.setLabel}>Set {index + 1}:</Text>
+                      <View style={styles.inputGroup}>
+                        <View style={styles.inputWrapper}>
+                          <Text style={styles.inputText}>weight</Text>
                           <TextInput
-                            style={styles.input}
+                            style={styles.inputField}
                             keyboardType="numeric"
+                            placeholder="0"
+                            placeholderTextColor={colors.border}
                             value={set.weight}
                             onChangeText={(text) => handlers.updateSets(item.name, index, 'weight', text)}
                           />
                         </View>
-                        <View style={styles.setInputContainer}>
-                          <Text style={styles.inputLabel}
-                          >Reps: </Text>
+                        <View style={styles.inputWrapper}>
+                          <Text style={styles.inputText}>reps</Text>
                           <TextInput
-                            style={styles.input}
+                            style={styles.inputField}
                             keyboardType="numeric"
+                            placeholder="0"
+                            placeholderTextColor={colors.border}
                             value={set.reps}
                             onChangeText={(text) => handlers.updateSets(item.name, index, 'reps', text)}
                           />
                         </View>
                       </View>
-                    </Swipeable>
-                  ))}
-                </View>
+                    </View>
+                  </Swipeable>
+                ))}
               </View>
-            </Swipeable>
-          }
+            </View>
+          </Swipeable>
+        )}
+      />
+
+      <View style={styles.fabContainer}>
+        <AppButton 
+          onPress={() => toggleModal('addExercise', true)}
+          title="Add Exercise"
+          variant="primary"
+          style={styles.fabButton}
         />
       </View>
 
@@ -119,7 +121,7 @@ const WorkoutTracker = () => {
         visible={modals.addExercise}
         onAddExercise={handlers.addExercise}
         onCancel={() => toggleModal('addExercise', false)}
-        showExerciseInputModal={modals}
+        showExerciseInputModal={modals.exerciseInput}
         setShowExerciseInputModal={(value) => toggleModal('exerciseInput', value)}
       />
       <ChooseWorkout

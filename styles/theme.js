@@ -1,34 +1,38 @@
 export const colors = {
     primary: '#4a3780',
-    primaryLight: '#6B5CA5',
+    primaryDark: '#362a60',
     secondary: '#FF9F1C',
-    background: '#F4F6FA',
+    background: '#F8F9FA',
     surface: '#FFFFFF',
-    textPrimary: '#1B1B1B',
-    textSecondary: '#6E6E6E',
-    border: '#E0E0E0',
+    textPrimary: '#212529',
+    textSecondary: '#6c757d',
+    border: '#DEE2E6',
     success: '#2EC4B6',
-    danger: '#FF3B30',
+    danger: '#DC3545',
     white: '#FFFFFF',
+    overlay: 'rgba(0, 0, 0, 0.5)',
 };
 
 export const spacing = {
+    xs: 4,
     s: 8,
     m: 16,
     l: 24,
     xl: 32,
     borderRadius: 12,
+    inputHeight: 48,
 };
 
 export const typography = {
     header: {
         fontSize: 24,
-        fontWeight: '700',
+        fontWeight: '800',
         color: colors.primary,
+        letterSpacing: -0.5,
     },
-    subHeader: {
+    cardHeader: {
         fontSize: 18,
-        fontWeight: '600',
+        fontWeight: '700',
         color: colors.textPrimary,
     },
     body: {
@@ -37,9 +41,10 @@ export const typography = {
     },
     buttonText: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '700',
         color: colors.white,
         textAlign: 'center',
         textTransform: 'uppercase',
-    }
+        letterSpacing: 1,
+    },
 };

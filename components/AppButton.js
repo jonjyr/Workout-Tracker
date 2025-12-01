@@ -5,6 +5,8 @@ export const AppButton = ({ onPress, title, style, textStyle, variant = 'primary
   const backgroundColor = variant === 'secondary' ? colors.secondary
     : variant === 'danger' ? colors.danger
     : variant === 'outline' ? 'transparent'
+    : variant === 'primaryDark' ? colors.primaryDark
+    : variant === 'success' ? colors.success
     : colors.primary;
 
   const TextColor = variant === 'outline' ? colors.primary

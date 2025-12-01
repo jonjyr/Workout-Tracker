@@ -91,8 +91,8 @@ const AddExercise = ({visible, onAddExercise, onCancel, showExerciseInputModal, 
             <AppButton 
               onPress={() => setShowExerciseInputModal(true)}
               title="Add New Exercise"
-              style={styles.buttonStyle}
-              textStyle={styles.buttonText}
+              style={styles.buttonContainer}
+              textStyle={styles.textStyle}
               variant="primary"
             />         
           </View>
