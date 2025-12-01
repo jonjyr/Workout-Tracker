@@ -8,6 +8,7 @@ export const mainStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
     paddingTop: 60, // Safe area handling
+    paddingBottom: 70,
   },
 
   // Input Screen
