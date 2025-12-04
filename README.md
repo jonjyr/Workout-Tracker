@@ -1,10 +1,8 @@
-<div align="right">
-  <img src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
-  <img src="https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white" />
-  <img src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white" />
-</div>
-
-# Workout Tracker
+<h1 align="left">Workout Tracker
+  <img align="right" src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
+  <img align="right" src="https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white"/>
+  <img align="right" src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white"/>
+</h1>
 
 > **A no-nonsense, privacy-focused mobile workout logging app built for speed,  persistence and pure muscle *GAINS!*** 🏋️
 
@@ -26,7 +24,7 @@ This personal project challenges the trend of bloated, data-snooping, subscripti
 | *Quickly create custom exercises without menu diving.* | *Log sets, adjust weights, and swipe-to-delete in real-time.* | *Review past sessions pulled directly from persistent local storage.* |
 | ![Setup GIF](./assets/demo_setup.gif) | ![Grind GIF](./assets/demo_grind.gif) | ![History GIF](./assets/demo_history.gif) |
 
-## 🛠 Technical Stack & Key Decisions
+## Technical Stack & Key Decisions
 
 ### **Core Framework: React Native (Expo)**
 * **Why:** Rapid prototyping and seamless cross-platform deployment (Android/iOS) without the overhead of maintaining native build pipelines for an MVP.
@@ -85,7 +83,7 @@ root
 
 - **Data Visualization:** Add charts to visualize volume progression over time.
 
-- **Muscle Map:** Visualize the workout volume for muscle group with an interactive muscle map.
+- **Muscle Map:** Visualize the workout volume for each muscle group with an interactive muscle map.
 
 - **Data Export:** Implement a feature that allows users to export their data to different file types.
 
