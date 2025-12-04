@@ -4,7 +4,7 @@ import { saveWorkout } from '../sqlconnection/db';
 
 /**
  * Custom hook managing the state and logic for the main Workout Tracker view
- * Handles exercise list management, modal toggling and satabase persistence
+ * Handles exercise list management, modal toggling and database persistence
  * @returns {Object} - An object containing the current exercise list, modal state and related functions
  */
 export const useWorkoutTracker = () => {

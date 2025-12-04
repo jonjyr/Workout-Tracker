@@ -48,7 +48,7 @@ const ChooseWorkout = ({visible, onImportWorkout, onImportCancel}) => {
   /**
    * Deletes a saved workout from the database
    * Confirmation alert before deleting
-   * @param {string} id - The unique ID of the saved workout
+   * @param {number} id - The unique ID of the saved workout
    * @throws {Error} If deleting fails
    */
   const confirmDeleteWorkout = (id) => {

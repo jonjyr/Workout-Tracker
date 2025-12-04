@@ -98,7 +98,6 @@ export const deleteWorkout = async (id) => {
  * @returns {Promise<Array<Object>>} List of workouts with parsed 'data' fields
  * @throws {Error} If fetching fails
  */
-// Async function for fetching all saved workouts from DB in ChooseWorkout.js
 export const fetchAllWorkouts = async () => {
   try {
       const db = await init();

@@ -4,7 +4,6 @@ import { AppButton } from '../components/AppButton';
 import { mainStyles as styles } from '../styles/mainStyles';
 import { colors } from '../styles/theme';
 
-// Modal component for inputting a new exercise to a list in AddExercise.js
 /**
  * Modal component for user input of a new exercise
  * @param {Object} props
