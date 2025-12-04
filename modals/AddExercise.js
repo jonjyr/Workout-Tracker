@@ -51,10 +51,16 @@ const AddExercise = ({
 
     /**
      * Saves a new inputted exercise to the database
+     * Alerts the user if the exercise already exists
      * @param {string} name - The name of the exercise
      * @throws {Error} If saving fails
      */
     const inputExercise = async (name) => {
+      const existingExercise = exerciseList.find(exercise => exercise.name.toLowerCase() === name.toLowerCase());
+      if (existingExercise) {
+        Alert.alert('Duplicate Exercise', 'Exercise already exists.');
+        return;
+      }
       try {
         await saveExercise(name);
         const updatedList = await fetchAllExercises();
