@@ -1,16 +1,26 @@
 import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import AddExercise from '../components/modals/AddExercise';
-import ChooseWorkout from '../components/modals/ChooseWorkout';
+import AddExercise from '../modals/AddExercise';
+import ChooseWorkout from '../modals/ChooseWorkout';
 import { useWorkoutTracker } from '../hooks/useWorkoutTracker';
 import { mainStyles as styles } from '../styles/mainStyles';
 import { colors } from '../styles/theme';
-import { AppButton } from '../components/ui/AppButton';
+import { AppButton } from '../components/AppButton';
 
+/**
+ * Main screen of the application
+ * Coordinates user interactions with the @useWorkoutTracker logic hook
+ * @returns {JSX.Element} - Main screen component
+ */
 const WorkoutTracker = () => {
   const { exercises, modals, toggleModal, handlers } = useWorkoutTracker();
 
-  // Function to render the right actions for the Swipeable component
+  // --- Render Functions ---
+
+  /**
+   * Renders deletion action when swiping an exercise card
+   * @param {string} exerciseName - The name of the exercise to delete
+   */
   const renderCardRightActions = (exerciseName) => (
     <TouchableOpacity
       style={styles.deleteAction}
@@ -20,23 +30,29 @@ const WorkoutTracker = () => {
     </TouchableOpacity>
   );
 
+  /**
+   * Renders deletion action when swiping a specific set row
+   * @param {string} exerciseName 
+   * @param {number} index
+   */
   const renderSetRightActions = (exerciseName, index) => (
     <TouchableOpacity
       style={styles.setDeleteAction}
       onPress={() => handlers.deleteSet(exerciseName, index)}
     >
-      <Text style={[styles.deleteText, {fontSize: 12}]}>DEL</Text>
+      <Text style={[styles.deleteText, { fontSize: 12 }]}>DEL</Text>
     </TouchableOpacity>
   );
 
   return ( 
     <View style={styles.screen}>
+      {/* --- Header & Action Bar --- */}
       <View style={styles.headerContainer}>
         <Text style={styles.heading}>🏋️ Workout Tracker 🏋️</Text>
         <View style={styles.actionBar}>
           <AppButton 
             onPress={() => toggleModal('chooseWorkout', true)}
-            title="Add Workout"
+            title="Workouts"
             variant="primary"
             style={styles.actionButton}
           />
@@ -48,7 +64,7 @@ const WorkoutTracker = () => {
           />
         </View>
       </View>
-      
+      {/* --- Main Exercise List --- */}
       <FlatList
         data={exercises}
         style={styles.listStyle}
@@ -56,6 +72,7 @@ const WorkoutTracker = () => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => (
           <Swipeable renderRightActions={() => renderCardRightActions(item.name)}>
+            {/* --- Exercise Card --- */}
             <View style={styles.card}>
               <View style={styles.cardHeader}>
                 <Text style={styles.exerciseTitle}>{item.name}</Text>
@@ -67,6 +84,7 @@ const WorkoutTracker = () => {
                   textStyle={{fontSize: 12}}
                 />
               </View>
+              {/* --- Set List --- */}
               <View>
                 {item.sets.map((set, index) => (
                   <Swipeable
@@ -107,7 +125,7 @@ const WorkoutTracker = () => {
           </Swipeable>
         )}
       />
-
+      {/* --- Floating Action Button --- */}
       <View style={styles.fabContainer}>
         <AppButton 
           onPress={() => toggleModal('addExercise', true)}
@@ -116,7 +134,7 @@ const WorkoutTracker = () => {
           style={styles.fabButton}
         />
       </View>
-
+      {/* --- Modals --- */}
       <AddExercise
         visible={modals.addExercise}
         onAddExercise={handlers.addExercise}

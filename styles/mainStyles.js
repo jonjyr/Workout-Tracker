@@ -3,15 +3,25 @@ import { colors, spacing, typography } from './theme';
 
 const { width } = Dimensions.get('window');
 
+/**
+ * Main stylesheet for the application
+ */
 export const mainStyles = StyleSheet.create({
+
+  // --- Layout ---
+
   screen: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingTop: 60, // Safe area handling
+    paddingTop: 60,
     paddingBottom: 70,
   },
-
-  // Input Screen
+    modalScreen: {
+    flex: 1,
+    backgroundColor: colors.background,
+    paddingTop: 40,
+    paddingHorizontal: spacing.m,
+  },
   inputScreen: {
     flex: 1,
     justifyContent: 'center',
@@ -20,15 +30,8 @@ export const mainStyles = StyleSheet.create({
     padding: spacing.m,
   },
 
-  // Modal Screen
-  modalScreen: {
-    flex: 1,
-    backgroundColor: colors.background,
-    paddingTop: 40,
-    paddingHorizontal: spacing.m,
-  },
+  // --- Headings ---
 
-  // Header
   headingContainer: {
     paddingHorizontal: spacing.m,
     marginBottom: spacing.m,
@@ -45,19 +48,8 @@ export const mainStyles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  // Inputs
-  input: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: spacing.borderRadius,
-    padding: spacing.m,
-    fontSize: 16,
-    color: colors.textPrimary,
-    width: '100%',
-    marginBottom: spacing.m,
-    alignSelf: 'center',
-  },
+  // --- Inputs ---
+
   inputContainer: {
     width: '90%',
     backgroundColor: colors.surface,
@@ -75,8 +67,20 @@ export const mainStyles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: colors.primary,
   },
+  input: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: spacing.borderRadius,
+    padding: spacing.m,
+    fontSize: 16,
+    color: colors.textPrimary,
+    width: '100%',
+    marginBottom: spacing.m,
+    alignSelf: 'center',
+  },
 
-  // Action Bar
+  // Actions
   actionBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -93,12 +97,11 @@ export const mainStyles = StyleSheet.create({
     marginBottom: spacing.l,
   },
 
-  // Main List
+  // --- Lists & Cards ---
+
   listContent: {
     paddingHorizontal: spacing.m,
   },
-
-  // Cards
   card: {
     backgroundColor: colors.surface,
     borderRadius: spacing.borderRadius,
@@ -143,7 +146,8 @@ export const mainStyles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  // Set Rows
+  // --- Set Rows (Inner Card) ---
+
   setRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -188,7 +192,8 @@ export const mainStyles = StyleSheet.create({
     padding: 0,
   },
 
-  // Swipe Actions
+  // --- Gestures ---
+
   deleteAction: {
     backgroundColor: colors.danger,
     justifyContent: 'center',
@@ -212,7 +217,8 @@ export const mainStyles = StyleSheet.create({
     borderRadius: spacing.s,
   },
 
-  // Floating Action Button
+  // --- Floating Action Button ---
+
   fabContainer: {
     position: 'absolute',
     bottom: 40,

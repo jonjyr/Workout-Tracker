@@ -1,16 +1,24 @@
+/**
+ * Global constants for application theme
+ * Contains styling for colors, spacing, and typography
+ */
+
 export const colors = {
+    // --- Main Colors ---
     primary: '#4a3780',
     primaryDark: '#362a60',
     secondary: '#FF9F1C',
-    background: '#F8F9FA',
-    surface: '#FFFFFF',
-    textPrimary: '#212529',
-    textSecondary: '#6c757d',
-    border: '#DEE2E6',
     success: '#2EC4B6',
     danger: '#DC3545',
+    // --- Utility Colors ---
+    border: '#DEE2E6',
+    background: '#F8F9FA',
+    surface: '#FFFFFF',
     white: '#FFFFFF',
     overlay: 'rgba(0, 0, 0, 0.5)',
+    // --- Text Colors ---
+    textPrimary: '#212529',
+    textSecondary: '#6c757d',
 };
 
 export const spacing = {
