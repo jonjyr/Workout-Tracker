@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { View, Text,  Modal, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { init, fetchAllWorkouts, deleteWorkout } from '../sqlconnection/db';
-import { AppButton } from './AppButton';
+import { AppButton } from '../components/ui/AppButton';
 import { mainStyles as styles } from '../styles/mainStyles';
 
 // Modal component for imporing a saved workout in App.js

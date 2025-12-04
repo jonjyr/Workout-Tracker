@@ -1,11 +1,11 @@
 import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import AddExercise from './AddExercise';
-import ChooseWorkout from './ChooseWorkout';
+import AddExercise from '../components/modals/AddExercise';
+import ChooseWorkout from '../components/modals/ChooseWorkout';
 import { useWorkoutTracker } from '../hooks/useWorkoutTracker';
 import { mainStyles as styles } from '../styles/mainStyles';
 import { colors } from '../styles/theme';
-import { AppButton } from './AppButton';
+import { AppButton } from '../components/ui/AppButton';
 
 const WorkoutTracker = () => {
   const { exercises, modals, toggleModal, handlers } = useWorkoutTracker();

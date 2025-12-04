@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, Text, Modal, FlatList, TouchableOpacity, Alert } from 'react-native';
 import ExerciseInput from './ExerciseInput';
 import { init, saveExercise, fetchAllExercises, deleteExercise } from '../sqlconnection/db';
-import { AppButton } from './AppButton';
+import { AppButton } from '../components/ui/AppButton';
 import { mainStyles as styles } from '../styles/mainStyles';
 
 // Modal component for choosing or adding a new exercise from a list to App.js

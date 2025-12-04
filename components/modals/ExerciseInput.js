@@ -1,6 +1,6 @@
 import { View, Text, Modal, TextInput } from 'react-native';
 import { useState } from 'react';
-import { AppButton } from './AppButton';
+import { AppButton } from '../components/ui/AppButton';
 import { mainStyles as styles } from '../styles/mainStyles';
 import { colors } from '../styles/theme';
 

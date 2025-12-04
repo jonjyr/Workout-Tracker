@@ -1,5 +1,5 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import WorkoutTracker from './components/WorkoutTracker';
+import WorkoutTracker from './screens/WorkoutTracker';
 
 export default function App() {
   return (
