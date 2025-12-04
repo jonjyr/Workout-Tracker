@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Modal, TextInput } from 'react-native';
+import { View, Text, Modal, TextInput } from 'react-native';
 import { useState } from 'react';
 import { AppButton } from './AppButton';
 import { mainStyles as styles } from '../styles/mainStyles';

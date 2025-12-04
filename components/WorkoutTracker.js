@@ -2,13 +2,13 @@ import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native'
 import { Swipeable } from 'react-native-gesture-handler';
 import AddExercise from './AddExercise';
 import ChooseWorkout from './ChooseWorkout';
-import { mainViewLogic } from '../hooks/mainViewLogic';
+import { useWorkoutTracker } from '../hooks/useWorkoutTracker';
 import { mainStyles as styles } from '../styles/mainStyles';
 import { colors } from '../styles/theme';
 import { AppButton } from './AppButton';
 
 const WorkoutTracker = () => {
-  const { exercises, modals, toggleModal, handlers } = mainViewLogic();
+  const { exercises, modals, toggleModal, handlers } = useWorkoutTracker();
 
   // Function to render the right actions for the Swipeable component
   const renderCardRightActions = (exerciseName) => (
