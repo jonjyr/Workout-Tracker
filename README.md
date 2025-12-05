@@ -1,7 +1,6 @@
 <h1 align="left">Workout Tracker
-  <img align="right" src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
-  <img align="right" src="https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white"/>
-  <img align="right" src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white"/>
+  <img align="right" src="https://img.shields.io/badge/SQLite-07405E?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite"/>
+  <img align="right" src="https://img.shields.io/badge/React_Native-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React Native"/>
 </h1>
 
 > **A no-nonsense, privacy-focused mobile workout logging app built for speed,  persistence and pure muscle *GAINS!*** 🏋️
