@@ -30,7 +30,7 @@ Track your workouts anywhere, anytime. This personal project challenges the tren
 
 The codebase follows a separation of concerns principle between UI, logic and database operations.
 
-``` bash
+```text
 root
 ├── hooks/
 │   └── useWorkoutTracker.js  # Central Logic that manages state, modals, and bridges UI to DB.
@@ -51,19 +51,25 @@ root
 
 ## Getting Started
 
-``` bash
-# 1. Clone the repository
-git clone https://github.com/jonjyr/workout-tracker.git
+1. **Clone the repository**
+    ```bash
+    git clone https://github.com/jonjyr/workout-tracker.git
+     ```
+    
+2. **Navigate to the project directory**
+    ```bash
+    cd workout-tracker
+    ```
 
-# 2. Navigate to the project directory
-cd workout-tracker
+2. **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-# 3. Install Dependencies
-npm install
-
-# 4. Run the Application
-npx expo start
-```
+3. **Run the Application**
+    ```bash
+    npx expo start
+    ```
 
 ## Future Roadmap
 
