@@ -1,89 +1,78 @@
-<h1 align="left">Workout Tracker
-  <img align="right" src="https://img.shields.io/badge/SQLite-07405E?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite"/>
-  <img align="right" src="https://img.shields.io/badge/React_Native-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React Native"/>
-</h1>
+<h1 align="center">Workout Tracker</h1>
 
-> **A no-nonsense, privacy-focused mobile workout logging app built for speed,  persistence and pure muscle *GAINS!*** 🏋️
+<div align="center">
+    <img src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+    <img src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white" />
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+</div><br>
+
+> **A no-nonsense, cross-platform mobile app for logging workouts locally with fast iteration and data persistence!** 🏋️
 
 ## Technologies
 - React Native
-- Expo
+- Expo Go
 - SQLite
 - JavaScript
 - React Native Gesture Handler
 
-## About
+## Overview
 
-This personal project challenges the trend of bloated, data-snooping, subscription-based fitness apps. It is a strictly offline-first mobile application that prioritizes data sovereignty and zero-latency interactions using a lightweight React Native powered interface with local SQLite database.
+Track your workouts anywhere, anytime. This personal project challenges the trend of bloated, data-snooping, subscription-based fitness apps. It is a strictly offline-first mobile application that prioritizes data sovereignty and zero-latency interactions using a lightweight React Native powered interface with local SQLite database.
 
 ## Demo
 
-| **1. The Setup** | **2. The Grind** | **3. The History** |
+| **1. Exercise Setup** | **2. Workout Logging** | **3. Save & Export** |
 |:---:|:---:|:---:|
-| *Quickly create custom exercises without menu diving.* | *Log sets, adjust weights, and swipe-to-delete in real-time.* | *Review past sessions pulled directly from persistent local storage.* |
+| *Create custom exercises with minimal menu diving.* | *Log sets, edit values, and swipe-to-delete in real-time.* | *Save your sessions directly into persistent local storage.* |
 | ![Setup GIF](./assets/demo_setup.gif) | ![Grind GIF](./assets/demo_grind.gif) | ![History GIF](./assets/demo_history.gif) |
-
-## Technical Stack & Key Decisions
-
-### **Core Framework: React Native (Expo)**
-* **Why:** Rapid prototyping and seamless cross-platform deployment (Android/iOS) without the overhead of maintaining native build pipelines for an MVP.
-* **Environment:** Managed workflow using Expo Go.
-
-### **Persistence: SQLite (expo-sqlite)**
-* **Why:** `AsyncStorage` is insufficient for structured relational data. SQLite was chosen to enable complex querying and robust data integrity.
-* **Performance:** Database journal mode set to **WAL (Write-Ahead Logging)** to ensure non-blocking reads and concurrent writes for a buttery smooth UI.
-
-### **State Management: Custom Hooks Pattern**
-* **Why:** Avoided the boilerplate of Redux for this scope. Logic is decoupled from the view using the `useWorkoutTracker` custom hook, separating UI concerns from business logic and database transactions.
-
-### **UI/UX: Gesture Handler**
-* **Why:** Mobile users expect tactile feedback. Implemented `Swipeable` components for destructive actions (deleting sets/exercises) to reduce UI clutter and button fatigue.
 
 ## Project Architecture
 
-The codebase follows a separation of concerns principle, keeping SQL logic isolated from UI components.
+The codebase follows a separation of concerns principle between UI, logic and database operations.
 
-```
+``` bash
 root
 ├── hooks/
-│   └── useWorkoutTracker.js  # CENTRAL LOGIC: Manages state, modals, and bridges UI to DB.
+│   └── useWorkoutTracker.js  # Central Logic that manages state, modals, and bridges UI to DB.
 ├── sqlconnection/
-│   └── db.js                 # DATA LAYER: Raw SQL queries, WAL mode init, and transaction handling.
+│   └── db.js                 # Raw SQL queries, WAL mode init, and transaction handling.
 ├── screens/
-│   └── WorkoutTracker.js     # VIEW: Main functional component, mostly presentational.
-├── modals/                   # MODULAR UI: Isolated modal components for cleaner main view.
+│   └── WorkoutTracker.js     # Main screen and presentational layout.
+├── modals/                   # Isolated modal components for cleaner main view.
 │   ├── AddExercise.js
 │   ├── ChooseWorkout.js
 |   └── ExerciseInput.js
 ├── components/               
-|   └── AppButton.js          # REUSABLE UI: Reusable button component.
+|   └── AppButton.js          # Reusable UI component.
 └── styles/
-    ├── mainStyles.js         # STYLESHEET: Shared styles for the application.
-    └── theme.js              # THEME: Color, spacing and typography definitions.
+    ├── mainStyles.js         
+    └── theme.js              # Centralized style definitions.
 ```
 
 ## Getting Started
 
-1. Clone the repository
+``` bash
+# 1. Clone the repository
+git clone https://github.com/jonjyr/workout-tracker.git
 
-    > git clone [https://github.com/jonjyr/workout-tracker.git](https://github.com/jonjyr/workout-tracker.git)\
-    > cd workout-tracker
+# 2. Navigate to the project directory
+cd workout-tracker
 
-2. Install Dependencies
-    
-    > npm install
+# 3. Install Dependencies
+npm install
 
-3. Run the Application
-    > npx expo start
+# 4. Run the Application
+npx expo start
+```
 
 ## Future Roadmap
 
-- **TypeScript Migration:** To enhance maintainability with stricter type checking.
+- Migration to TypeScript for stricter typing and maintainability.
 
-- **Data Visualization:** Add charts to visualize volume progression over time.
+- Adding charts and maps to visualize workout volume and progression.
 
-- **Muscle Map:** Visualize the workout volume for each muscle group with an interactive muscle map.
+- Database schema refactoring.
 
-- **Data Export:** Implement a feature that allows users to export their data to different file types.
+- Data export implementation (CSV/JSON).
 
-- **Dark Mode:** Add a toggle for dark mode.
+- Adding dark mode or theme customization.
