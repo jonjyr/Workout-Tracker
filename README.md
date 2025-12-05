@@ -6,7 +6,7 @@
     <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
 </div><br>
 
-> **A no-nonsense, cross-platform mobile app for logging workouts locally with fast iteration and data persistence!** 🏋️
+> **No-nonsense, cross-platform mobile app for logging workouts locally with fast iteration and data persistence!** 🏋️
 
 ## Technologies
 - React Native
@@ -61,12 +61,12 @@ root
     cd workout-tracker
     ```
 
-2. **Install Dependencies**
+2. **Install dependencies**
     ```bash
     npm install
     ```
 
-3. **Run the Application**
+3. **Run the application**
     ```bash
     npx expo start
     ```
