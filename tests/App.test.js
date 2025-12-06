@@ -52,7 +52,7 @@ describe('Workout Tracker hook', () => {
       result.current.handlers.addExercise(exerciseName);
       result.current.handlers.deleteExercise(exerciseName);
     });
-    expect(result.current.exercises).toEqual(expect.not.arrayContaining([expect.objectContaining({ name: exerciseName, sets: [] })]));
+    expect(result.current.exercises).toEqual([]);
   });
 
   // 4. Test Adding Set
@@ -132,9 +132,7 @@ describe('Workout Tracker hook', () => {
  */
 describe('Choose Workout hook', () => {
   // --- Reset mocks before each test ---
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  beforeEach(() => jest.clearAllMocks());
 
   // 1. Test Deleting Saved Workout
   it('should delete a saved workout from the database', async () => {
@@ -148,7 +146,7 @@ describe('Choose Workout hook', () => {
     await act(async () => {
       await result.current.deleteWorkoutFromDB(1);
     });
-    await waitFor(() => expect(db.deleteWorkout).toHaveBeenCalledWith(1));
+    expect(db.deleteWorkout).toHaveBeenCalledWith(1);
     await waitFor(() => expect(result.current.workoutList).toHaveLength(0));
   });
 });
@@ -157,10 +155,8 @@ describe('Choose Workout hook', () => {
  * Test the Add Exercise hook
  */
 describe('Add Exercise hook', () => {
-  // --- Reset mocks before each test ---
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  // --- Clear mocks before each test ---
+  beforeEach(() => jest.clearAllMocks());
 
   // 1. Test Adding New Exercise to List of Exercises
   it('should add a new exercise to the list of exercises', async () => {
@@ -181,15 +177,19 @@ describe('Add Exercise hook', () => {
 
   // 2. Test Deleting Exercise from List of Exercises
   it('should delete an exercise from the list of exercises', async () => {
-    const { result } = renderHook(() => useAddExercise(true));
-    const name = 'Bench Press';
+    db.fetchAllExercises
+      .mockResolvedValueOnce([{ id: 1, name: 'Bench Press' }])
+      .mockResolvedValueOnce([]);
 
-    act(() => {
-      result.current.inputExercise(name);
+    const { result } = renderHook(() => useAddExercise(true));
+    const exerciseName = 'Bench Press';
+
+    await waitFor(() => expect(result.current.exerciseList).toHaveLength(1));
+    await act(async () => {
+      await result.current.removeExercise(exerciseName);
     });
-    act(() => {
-      result.current.removeExercise(name);
-    });
-    waitFor(() => expect(result.current.exerciseList).toEqual(expect.not.arrayContaining([expect.objectContaining({ name })])));
+    expect(db.deleteExercise).toHaveBeenCalledWith(exerciseName);
+    db.fetchAllExercises.mockResolvedValueOnce([]);
+    await waitFor(() => expect(result.current.exerciseList).toHaveLength(0));
   });
 });
