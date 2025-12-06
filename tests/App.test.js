@@ -134,16 +134,17 @@ describe('Choose Workout hook', () => {
 
   // 1. Test Deleting Saved Workout
   it('should delete a saved workout from the database', async () => {
-    const { result } = renderHook(() => useChooseWorkout(true));
-    const id = 1;
+    const mockInitialWorkouts = [{ id: 1, data: [], date: '2025-01-01' }];
+    db.fetchAllWorkouts.mockResolvedValue(mockInitialWorkouts);
 
-    act(() => {
-      result.current.workoutList = [{ id: id, data: [{ name: 'Bench Press', sets: [{ weight: '100', reps: '5' }] }], date: '2025-01-01' }];
+    const { result } = renderHook(() => useChooseWorkout(true));
+
+    await waitFor(() => expect(result.current.workoutList).toHaveLength(1));
+    db.fetchAllWorkouts.mockResolvedValueOnce([]);
+    await act(async () => {
+      await result.current.deleteWorkoutFromDB(1);
     });
-    act(() => {
-      result.current.deleteWorkoutFromDB(id);
-    });
-    waitFor(() => expect(result.current.workoutList).toEqual(expect.not.arrayContaining([expect.objectContaining({ id })])));
+    await waitFor(() => expect(result.current.workoutList).toHaveLength(0));
   });
 });
  
