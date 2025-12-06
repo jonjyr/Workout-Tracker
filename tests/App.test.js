@@ -189,7 +189,6 @@ describe('Add Exercise hook', () => {
       await result.current.removeExercise(exerciseName);
     });
     expect(db.deleteExercise).toHaveBeenCalledWith(exerciseName);
-    db.fetchAllExercises.mockResolvedValueOnce([]);
     await waitFor(() => expect(result.current.exerciseList).toHaveLength(0));
   });
 });
