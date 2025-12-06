@@ -1,8 +1,8 @@
 import { View, Text, Modal, TextInput } from 'react-native';
-import { useState } from 'react';
 import { AppButton } from '../components/AppButton';
 import { mainStyles as styles } from '../styles/mainStyles';
 import { colors } from '../styles/theme';
+import { useExerciseInput } from '../hooks/useExerciseInput';
 
 /**
  * Modal component for user input of a new exercise
@@ -12,29 +12,8 @@ import { colors } from '../styles/theme';
  * @param {function} props.onInputCancel - Callback for canceling
  * @returns {JSX.Element} - Modal component
  */
-const ExerciseInput = ({ visible, onInputExercise, onInputCancel }) => {
-  // --- State for Input ---
-  const [name, setName] = useState('');
-
-  // --- Handlers ---
-
-  /**
-   * Handler for canceling the input screen
-   */
-  const handleCancel = () => {
-    setName(''); 
-    onInputCancel();
-  }
-
-  /**
-   * Handler for submitting the input
-   * Checks if the input is empty
-   */
-  const handleSubmit = () => {
-    if (!name.trim()) return;
-    onInputExercise(name);
-    setName('');
-  }
+const ExerciseInput = ({ visible }) => {
+  const { name, setName, handleCancel, handleSubmit } = useExerciseInput();
 
   return (
     <Modal 
