@@ -14,6 +14,7 @@
 - SQLite
 - JavaScript
 - React Native Gesture Handler
+- Jest / React Testing Library
 
 ## Overview
 
@@ -32,21 +33,26 @@ The codebase follows a separation of concerns principle between UI, logic and da
 
 ```text
 root
-├── hooks/
-│   └── useWorkoutTracker.js  # Central Logic that manages state, modals, and bridges UI to DB.
-├── sqlconnection/
+├── hooks/                    # Custom logic hooks for UI components.
+│   ├── useWorkoutTracker.js  
+│   ├── useAddExercise.js     
+│   ├── useChooseWorkout.js   
+│   ├── useExerciseInput.js   
+├── sqlconnection/            
 │   └── db.js                 # Raw SQL queries, WAL mode init, and transaction handling.
-├── screens/
-│   └── WorkoutTracker.js     # Main screen and presentational layout.
-├── modals/                   # Isolated modal components for cleaner main view.
+├── screens/                  
+│   └── WorkoutTracker.js     # Main application screen UI component.
+├── modals/                   # Isolated UI components for modals.
 │   ├── AddExercise.js
 │   ├── ChooseWorkout.js
 |   └── ExerciseInput.js
 ├── components/               
-|   └── AppButton.js          # Reusable UI component.
-└── styles/
-    ├── mainStyles.js         
-    └── theme.js              # Centralized style definitions.
+|   └── AppButton.js          # Custom button component.
+├── styles/
+│   ├── mainStyles.js         
+│   └── theme.js              # Centralized style definitions.
+└── tests/
+    └── App.test.js           # Unit tests for the application.
 ```
 
 ## Getting Started
