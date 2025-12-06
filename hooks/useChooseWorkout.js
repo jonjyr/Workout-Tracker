@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { init, fetchAllWorkouts, deleteWorkout } from '../sqlconnection/db';
-import { visible } from '../modals/ChooseWorkout';
 
 /**
  * Custom hook for managing the state and logic for the Choose Workout modal
  * @returns {Object} - Object containing state and helper functions for the Choose Workout modal
  */
-export const useChooseWorkout = () => {
+export const useChooseWorkout = (visible) => {
   // --- State for the list of workouts ---
   const [workoutList, setWorkoutList] = useState([]);
 
@@ -41,10 +40,9 @@ export const useChooseWorkout = () => {
   };
 
   /**
-   * Deletes a saved workout from the database
-   * Confirmation alert before deleting
+   * Confirms the deletion of a saved workout
+   * Calls the deleteWorkoutFromDB function if confirmed to delete the workout from the database
    * @param {number} id - The unique ID of the saved workout
-   * @throws {Error} If deleting fails
    */
   const confirmDeleteWorkout = (id) => {
     Alert.alert(
@@ -55,20 +53,32 @@ export const useChooseWorkout = () => {
         {
           text: "OK",
           style: "destructive",
-          onPress: async () => {
-            try {
-              await deleteWorkout(id);
-              readWorkouts();
-            } 
-            catch (error) {
-              console.error(`Error deleting workout: ${error.message}`);
-              Alert.alert('Error', 'Failed to delete workout.');
-            }
-          }
+          onPress: () => deleteWorkoutFromDB(id)
         }
       ]
     );
   };
 
-  return { workoutList, readWorkouts, confirmDeleteWorkout };
-}
+  /**
+  * Deletes a saved workout from the database
+  * @param {number} id - The unique ID of the saved workout
+  * @throws {Error} If deleting fails
+  */
+  const deleteWorkoutFromDB = async (id) => {
+    try {
+      await deleteWorkout(id);
+      readWorkouts();
+    } 
+    catch (error) {
+      console.error(`Error deleting workout: ${error.message}`);
+      Alert.alert('Error', 'Failed to delete workout.');
+    }
+  };
+
+  return {
+    workoutList,
+    readWorkouts,
+    confirmDeleteWorkout,
+    deleteWorkoutFromDB
+  };
+};
