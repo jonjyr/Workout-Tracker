@@ -98,15 +98,19 @@ describe('Workout Tracker hook', () => {
   });
 
   // 7. Test Saving Workout
-  it('should save the current workout to the database', () => {
+  it('should save and clear the current workout', async () => {
     const { result } = renderHook(() => useWorkoutTracker());
     const exerciseName = 'Bench Press';
-
+    
     act(() => {
       result.current.handlers.addExercise(exerciseName);
-      result.current.handlers.saveWorkoutToDB();
     });
-    expect(result.current.exercises).toEqual(expect.arrayContaining([expect.objectContaining({ name: exerciseName, sets: [] })]));
+    expect(result.current.exercises).toHaveLength(1);
+    await act(async () => {
+      await result.current.handlers.saveWorkoutToDB();
+    });
+    expect(db.saveWorkout).toHaveBeenCalled();
+    expect(result.current.exercises).toHaveLength(0);
   });
 
   // 8. Test Loading Saved Workout
@@ -144,6 +148,7 @@ describe('Choose Workout hook', () => {
     await act(async () => {
       await result.current.deleteWorkoutFromDB(1);
     });
+    await waitFor(() => expect(db.deleteWorkout).toHaveBeenCalledWith(1));
     await waitFor(() => expect(result.current.workoutList).toHaveLength(0));
   });
 });
@@ -159,13 +164,19 @@ describe('Add Exercise hook', () => {
 
   // 1. Test Adding New Exercise to List of Exercises
   it('should add a new exercise to the list of exercises', async () => {
-    const { result } = renderHook(() => useAddExercise(true));
-    const name = 'Bench Press';
+    db.fetchAllExercises
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce([{ id: 1, name: 'Bench Press' }]);
 
-    act(() => {
-      result.current.inputExercise(name);
+    const { result } = renderHook(() => useAddExercise(true));
+
+    await waitFor(() => expect(result.current.exerciseList).toEqual([]));
+    await act(async () => {
+      await result.current.inputExercise('Bench Press');
     });
-    waitFor(() => expect(result.current.exerciseList).toEqual(expect.arrayContaining([expect.objectContaining({ name })])));
+    expect(db.saveExercise).toHaveBeenCalledWith('Bench Press');
+    expect(result.current.exerciseList).toEqual(expect.arrayContaining([expect.objectContaining({ id: 1, name: 'Bench Press' })]));
+
   });
 
   // 2. Test Deleting Exercise from List of Exercises
