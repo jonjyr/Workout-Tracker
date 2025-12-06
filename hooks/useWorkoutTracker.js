@@ -77,7 +77,7 @@ export const useWorkoutTracker = () => {
   };
 
   /**
-   * Updates a spcific field (weight or reps) in a specific set
+   * Updates a specific field (weight or reps) in a specific set
    * @param {string} exerciseName - The name of the exercise
    * @param {number} index - The index of the set
    * @param {string} key - The field to update (weight or reps)
