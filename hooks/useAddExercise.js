@@ -100,7 +100,7 @@ export const useAddExercise = () => {
    * @param {string} name - Name of the exercise
    * @throws {Error} If removing fails
    */
-  const removeExercise = async () => {
+  const removeExercise = async (name) => {
     try {
       await deleteExercise(name);
       readExercises();
@@ -110,5 +110,13 @@ export const useAddExercise = () => {
     }
   };
 
-  return { exerciseList, validateInput, validateDelete, removeExercise, inputExercise, inputModalVisible, setInputModalVisible };
+  return { 
+    exerciseList,
+    validateInput,
+    validateDelete,
+    removeExercise,
+    inputExercise,
+    inputModalVisible,
+    setInputModalVisible
+  };
 };
