@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
 
 jobs:
   validate:
@@ -12,16 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: npm
 
-      - name: Install Dependecies
+      - name: Install Dependencies
         run: npm ci
 
       - name: Run Lint
@@ -29,3 +29,9 @@ jobs:
 
       - name: Run Tests
         run: npm test
+
+      - name: Expo Prebuild
+        run: npx expo prebuild
+
+      - name: Security Audit
+        run: npm audit --audit-level=high || true
