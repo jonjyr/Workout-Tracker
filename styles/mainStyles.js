@@ -1,7 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { colors, spacing, typography } from './theme';
-
-const { width } = Dimensions.get('window');
 
 /**
  * Main stylesheet for the application
