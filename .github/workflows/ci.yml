@@ -30,8 +30,5 @@ jobs:
       - name: Run Tests
         run: npm test
 
-      - name: Expo Prebuild
-        run: npx expo prebuild
-
       - name: Security Audit
-        run: npm audit --audit-level=high || true
+        run: npm audit --audit-level=high
