@@ -1,9 +1,9 @@
 <h1 align="center">Workout Tracker</h1>
-
 <div align="center">
-    <img src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
-    <img src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white" />
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+    <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/jonjyr/Workout-Tracker/ci.yml?style=plastic" />
+    <img alt="React Native Badge" src="https://img.shields.io/badge/React_Native-20232A?style=plastic&logo=react&logoColor=61DAFB" />
+    <img alt="SQLite Badge" src="https://img.shields.io/badge/SQLite-07405E?style=plastic&logo=sqlite&logoColor=white" />
+    <img alt="JAvaScript Badge" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=plastic&logo=javascript&logoColor=black" />
 </div><br>
 
 > **No-nonsense, cross-platform mobile app for logging workouts locally with fast iteration and data persistence!** 🏋️
@@ -34,26 +34,26 @@ The codebase follows a separation of concerns principle between UI, logic and da
 
 ```text
 root
-├── hooks/                    # Custom logic hooks for UI components.
+├── hooks/                   # Custom logic hooks for UI components.
 │   ├── useWorkoutTracker.js
 │   ├── useAddExercise.js
 │   ├── useChooseWorkout.js
 │   ├── useExerciseInput.js
 ├── sqlconnection/
-│   └── db.js                 # Raw SQL queries, WAL mode init, and transaction handling.
+│   └── db.js                # Raw SQL queries, WAL mode init, and transaction handling.
 ├── screens/
-│   └── WorkoutTracker.js     # Main application screen UI component.
-├── modals/                   # Isolated UI components for modals.
+│   └── WorkoutTracker.js    # Main application screen UI component.
+├── modals/                  # Isolated UI components for modals.
 │   ├── AddExercise.js
 │   ├── ChooseWorkout.js
 |   └── ExerciseInput.js
 ├── components/
-|   └── AppButton.js          # Custom button component.
+|   └── AppButton.js         # Custom button component.
 ├── styles/
 │   ├── mainStyles.js
-│   └── theme.js              # Centralized style definitions.
+│   └── theme.js             # Centralized style definitions.
 └── tests/
-    └── App.test.js           # Unit tests for the application.
+    └── App.test.js          # Unit tests for the application.
 ```
 
 ## Getting Started
