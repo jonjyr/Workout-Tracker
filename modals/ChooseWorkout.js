@@ -1,4 +1,4 @@
-import { View, Text,  Modal, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Modal, FlatList, TouchableOpacity } from 'react-native';
 import { AppButton } from '../components/AppButton';
 import { mainStyles as styles } from '../styles/mainStyles';
 import { useChooseWorkout } from '../hooks/useChooseWorkout';
@@ -11,15 +11,15 @@ import { useChooseWorkout } from '../hooks/useChooseWorkout';
  * @param {function} props.onImportCancel - Callback for canceling the modal
  * @returns {JSX.Element} - Modal component
  */
-const ChooseWorkout = ({visible, onImportWorkout, onImportCancel}) => {
+const ChooseWorkout = ({ visible, onImportWorkout, onImportCancel }) => {
   const { workoutList, confirmDeleteWorkout } = useChooseWorkout();
   return (
-    <Modal visible={visible} animationType='slide'>
+    <Modal visible={visible} animationType="slide">
       <View style={styles.modalScreen}>
         {/* Header and Cancel Button */}
         <Text style={styles.heading}>Saved Workouts</Text>
         <View style={styles.buttonContainer}>
-          <AppButton 
+          <AppButton
             onPress={onImportCancel}
             title="Cancel"
             variant="cancel"
@@ -31,15 +31,17 @@ const ChooseWorkout = ({visible, onImportWorkout, onImportCancel}) => {
           data={workoutList}
           contentContainerStyle={styles.listContent}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => 
+          renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.listItemCard}
               onPress={() => onImportWorkout(item)}
               onLongPress={() => confirmDeleteWorkout(item.id)}
             >
-              <Text style={styles.listItemText}>Workout {item.index} - {item.date.split('T')[0]}</Text>
+              <Text style={styles.listItemText}>
+                Workout {item.index} - {item.date.split('T')[0]}
+              </Text>
             </TouchableOpacity>
-          }
+          )}
         />
       </View>
     </Modal>

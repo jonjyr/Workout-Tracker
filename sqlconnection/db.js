@@ -13,11 +13,15 @@ import * as SQLite from 'expo-sqlite';
  * @returns {Promise<SQLite.SQLiteDatabase>} The database instance
  */
 export const init = async () => {
-  const db = await SQLite.openDatabaseAsync('exercises.db', { useNewConnection: true });
+  const db = await SQLite.openDatabaseAsync('exercises.db', {
+    useNewConnection: true,
+  });
 
-  await db.execAsync('PRAGMA journal_mode = WAL;' +
-    'CREATE TABLE IF NOT EXISTS exercises(id INTEGER PRIMARY KEY, name TEXT NOT NULL);' +
-    'CREATE TABLE IF NOT EXISTS workouts(id INTEGER PRIMARY KEY, data TEXT NOT NULL, date TEXT NOT NULL);');
+  await db.execAsync(
+    'PRAGMA journal_mode = WAL;' +
+      'CREATE TABLE IF NOT EXISTS exercises(id INTEGER PRIMARY KEY, name TEXT NOT NULL);' +
+      'CREATE TABLE IF NOT EXISTS workouts(id INTEGER PRIMARY KEY, data TEXT NOT NULL, date TEXT NOT NULL);',
+  );
 
   return db;
 };
@@ -30,7 +34,9 @@ export const init = async () => {
  */
 export const saveExercise = async (name) => {
   const db = await init();
-  const statement = await db.prepareAsync('INSERT INTO exercises (name) VALUES ($name)');
+  const statement = await db.prepareAsync(
+    'INSERT INTO exercises (name) VALUES ($name)',
+  );
 
   await statement.executeAsync({ $name: name });
   await statement.finalizeAsync();
@@ -42,7 +48,9 @@ export const saveExercise = async (name) => {
  */
 export const deleteExercise = async (name) => {
   const db = await init();
-  const statement = await db.prepareAsync('DELETE FROM exercises WHERE name = $name');
+  const statement = await db.prepareAsync(
+    'DELETE FROM exercises WHERE name = $name',
+  );
 
   await statement.executeAsync({ $name: name });
   await statement.finalizeAsync();
@@ -55,13 +63,12 @@ export const deleteExercise = async (name) => {
  */
 export const fetchAllExercises = async () => {
   try {
-      const db = await init();
-      const result = await db.getAllAsync('SELECT * FROM exercises'); 
+    const db = await init();
+    const result = await db.getAllAsync('SELECT * FROM exercises');
 
-      return result;
-  }
-  catch (error) {
-      throw new Error(`Error fetching exercises: ${error.message}`); 
+    return result;
+  } catch (error) {
+    throw new Error(`Error fetching exercises: ${error.message}`);
   }
 };
 
@@ -74,7 +81,9 @@ export const fetchAllExercises = async () => {
  */
 export const saveWorkout = async (exercises, date) => {
   const db = await init();
-  const statement = await db.prepareAsync('INSERT INTO workouts (data, date) VALUES ($data, $date)');
+  const statement = await db.prepareAsync(
+    'INSERT INTO workouts (data, date) VALUES ($data, $date)',
+  );
   const jsonData = JSON.stringify(exercises);
 
   await statement.executeAsync({ $data: jsonData, $date: date });
@@ -87,28 +96,29 @@ export const saveWorkout = async (exercises, date) => {
  */
 export const deleteWorkout = async (id) => {
   const db = await init();
-  const statement = await db.prepareAsync('DELETE FROM workouts WHERE id = $id');
+  const statement = await db.prepareAsync(
+    'DELETE FROM workouts WHERE id = $id',
+  );
 
   await statement.executeAsync({ $id: id });
   await statement.finalizeAsync();
 };
 
 /**
- * Retrieves and parses the JSON data for all saved workouts from the database 
+ * Retrieves and parses the JSON data for all saved workouts from the database
  * @returns {Promise<Array<Object>>} List of workouts with parsed 'data' fields
  * @throws {Error} If fetching fails
  */
 export const fetchAllWorkouts = async () => {
   try {
-      const db = await init();
-      const result = await db.getAllAsync('SELECT * FROM workouts');
+    const db = await init();
+    const result = await db.getAllAsync('SELECT * FROM workouts');
 
-      return result.map(workout => ({
-        ...workout,
-        data: JSON.parse(workout.data)
-      }));
-  }
-  catch (error) {
-      throw new Error(`Error fetching workouts: ${error.message}`);
+    return result.map((workout) => ({
+      ...workout,
+      data: JSON.parse(workout.data),
+    }));
+  } catch (error) {
+    throw new Error(`Error fetching workouts: ${error.message}`);
   }
 };

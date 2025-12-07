@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Alert } from 'react-native';
-import { init, fetchAllExercises, saveExercise, deleteExercise } from '../sqlconnection/db';
+import {
+  init,
+  fetchAllExercises,
+  saveExercise,
+  deleteExercise,
+} from '../sqlconnection/db';
 
 /**
  * Custom hook managing the state and logic for the Add Exercise modal
@@ -15,10 +20,10 @@ export const useAddExercise = () => {
 
   // --- Effect for fetching all exercises from DB ---
 
-  useEffect(()=>{
+  useEffect(() => {
     init();
     readExercises();
-  },[]);
+  }, []);
 
   // --- Data Helper Functions ---
 
@@ -26,17 +31,16 @@ export const useAddExercise = () => {
    * Reads all exercises from the database and updates the exercise list
    * @throws {Error} If reading fails
    */
-  async function readExercises(){
-    try{
+  async function readExercises() {
+    try {
       const dbResult = await fetchAllExercises();
 
       setExerciseList(dbResult);
-    }
-    catch (error) {
+    } catch (error) {
       console.error(`Error reading exercises: ${error.message}`);
       Alert.alert('Error', 'Failed to load exercises.');
     }
-  };
+  }
 
   /**
    * Validates if the exercise name already exists in the database
@@ -44,7 +48,9 @@ export const useAddExercise = () => {
    * @param {string} name - The name of the exercise
    */
   const validateInput = async (name) => {
-    const existingExercise = exerciseList.find(exercise => exercise.name.toLowerCase() === name.toLowerCase());
+    const existingExercise = exerciseList.find(
+      (exercise) => exercise.name.toLowerCase() === name.toLowerCase(),
+    );
     if (existingExercise) {
       Alert.alert('Duplicate Exercise', 'Exercise already exists.');
       return;
@@ -64,12 +70,10 @@ export const useAddExercise = () => {
       const updatedList = await fetchAllExercises();
 
       setExerciseList(updatedList);
-    } 
-    catch (error) {
+    } catch (error) {
       console.error('Error creating exercise:', error.message);
       Alert.alert('Error', 'Failed to create exercise.');
-    } 
-    finally {
+    } finally {
       setInputModalVisible(false);
     }
   };
@@ -80,18 +84,14 @@ export const useAddExercise = () => {
    * @param {string} name - Name of the exercise
    */
   const validateDelete = (name) => {
-    Alert.alert(
-      "Delete Exercise",
-      `Permanently delete '${name}'?`,
-      [
-        { text: "Cancel", style: "cancel" },
-        { 
-          text: "OK",
-          style: "destructive",
-          onPress: () => removeExercise()
-        }
-      ],
-    );
+    Alert.alert('Delete Exercise', `Permanently delete '${name}'?`, [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'OK',
+        style: 'destructive',
+        onPress: () => removeExercise(),
+      },
+    ]);
   };
 
   /**
@@ -104,19 +104,18 @@ export const useAddExercise = () => {
     try {
       await deleteExercise(name);
       readExercises();
-    } 
-    catch (error) {
+    } catch (error) {
       console.error(`Error deleting exercise: ${error.message}`);
     }
   };
 
-  return { 
+  return {
     exerciseList,
     validateInput,
     validateDelete,
     removeExercise,
     inputExercise,
     inputModalVisible,
-    setInputModalVisible
+    setInputModalVisible,
   };
 };

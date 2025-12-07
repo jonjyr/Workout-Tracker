@@ -31,7 +31,7 @@ describe('Workout Tracker hook', () => {
     const { result } = renderHook(() => useWorkoutTracker());
     expect(result.current.exercises.length).toEqual(0);
   });
-  
+
   // 2. Test Adding Exercise
   it('should add an existing exercise to Workout Tracker', () => {
     const { result } = renderHook(() => useWorkoutTracker());
@@ -40,7 +40,11 @@ describe('Workout Tracker hook', () => {
     act(() => {
       result.current.handlers.addExercise(exerciseName);
     });
-    expect(result.current.exercises).toEqual(expect.arrayContaining([expect.objectContaining({ name: exerciseName, sets: [] })]));
+    expect(result.current.exercises).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: exerciseName, sets: [] }),
+      ]),
+    );
   });
 
   // 3. Test Deleting Exercise
@@ -64,7 +68,14 @@ describe('Workout Tracker hook', () => {
       result.current.handlers.addExercise(exerciseName);
       result.current.handlers.addSet(exerciseName);
     });
-    expect(result.current.exercises).toEqual(expect.arrayContaining([expect.objectContaining({ name: exerciseName, sets: [{ weight: '', reps: '' }] })]));
+    expect(result.current.exercises).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: exerciseName,
+          sets: [{ weight: '', reps: '' }],
+        }),
+      ]),
+    );
   });
 
   // 5. Test Editing Set
@@ -80,7 +91,14 @@ describe('Workout Tracker hook', () => {
       result.current.handlers.addSet(exerciseName);
       result.current.handlers.updateSets(exerciseName, index, key, value);
     });
-    expect(result.current.exercises).toEqual(expect.arrayContaining([expect.objectContaining({ name: exerciseName, sets: [{ weight: '100', reps: '' }] })]));
+    expect(result.current.exercises).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: exerciseName,
+          sets: [{ weight: '100', reps: '' }],
+        }),
+      ]),
+    );
   });
 
   // 6. Test Deleting Set
@@ -94,14 +112,18 @@ describe('Workout Tracker hook', () => {
       result.current.handlers.addSet(exerciseName);
       result.current.handlers.deleteSet(exerciseName, index);
     });
-    expect(result.current.exercises).toEqual(expect.arrayContaining([expect.objectContaining({ name: exerciseName, sets: [] })]));
+    expect(result.current.exercises).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: exerciseName, sets: [] }),
+      ]),
+    );
   });
 
   // 7. Test Saving Workout
   it('should save and clear the current workout', async () => {
     const { result } = renderHook(() => useWorkoutTracker());
     const exerciseName = 'Bench Press';
-    
+
     act(() => {
       result.current.handlers.addExercise(exerciseName);
     });
@@ -124,7 +146,7 @@ describe('Workout Tracker hook', () => {
       result.current.handlers.importWorkout(mockWorkout);
     });
     expect(result.current.exercises).toEqual(mockWorkout.data);
-  }); 
+  });
 });
 
 /**
@@ -150,7 +172,7 @@ describe('Choose Workout hook', () => {
     await waitFor(() => expect(result.current.workoutList).toHaveLength(0));
   });
 });
- 
+
 /**
  * Test the Add Exercise hook
  */
@@ -171,8 +193,11 @@ describe('Add Exercise hook', () => {
       await result.current.inputExercise('Bench Press');
     });
     expect(db.saveExercise).toHaveBeenCalledWith('Bench Press');
-    expect(result.current.exerciseList).toEqual(expect.arrayContaining([expect.objectContaining({ id: 1, name: 'Bench Press' })]));
-
+    expect(result.current.exerciseList).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: 1, name: 'Bench Press' }),
+      ]),
+    );
   });
 
   // 2. Test Deleting Exercise from List of Exercises

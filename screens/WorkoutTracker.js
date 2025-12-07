@@ -1,4 +1,10 @@
-import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import AddExercise from '../modals/AddExercise';
 import ChooseWorkout from '../modals/ChooseWorkout';
@@ -32,7 +38,7 @@ const WorkoutTracker = () => {
 
   /**
    * Renders deletion action when swiping a specific set row
-   * @param {string} exerciseName 
+   * @param {string} exerciseName
    * @param {number} index
    */
   const renderSetRightActions = (exerciseName, index) => (
@@ -44,19 +50,19 @@ const WorkoutTracker = () => {
     </TouchableOpacity>
   );
 
-  return ( 
+  return (
     <View style={styles.screen}>
       {/* --- Header & Action Bar --- */}
       <View style={styles.headerContainer}>
         <Text style={styles.heading}>🏋️ Workout Tracker 🏋️</Text>
         <View style={styles.actionBar}>
-          <AppButton 
+          <AppButton
             onPress={() => toggleModal('chooseWorkout', true)}
             title="Workouts"
             variant="primary"
             style={styles.actionButton}
           />
-          <AppButton 
+          <AppButton
             onPress={handlers.saveWorkoutToDB}
             title="Finish & Save"
             variant="success"
@@ -70,18 +76,24 @@ const WorkoutTracker = () => {
         style={styles.listStyle}
         contentContainerStyle={styles.listContent}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => (
-          <Swipeable renderRightActions={() => renderCardRightActions(item.name)}>
+        renderItem={({ item }) => (
+          <Swipeable
+            renderRightActions={() => renderCardRightActions(item.name)}
+          >
             {/* --- Exercise Card --- */}
             <View style={styles.card}>
               <View style={styles.cardHeader}>
                 <Text style={styles.exerciseTitle}>{item.name}</Text>
-                <AppButton 
+                <AppButton
                   onPress={() => handlers.addSet(item.name)}
                   title="Add Set"
                   variant="secondary"
-                  style={{paddingVertical: 6, paddingHorizontal: 12, borderRadius: 8}}
-                  textStyle={{fontSize: 12}}
+                  style={{
+                    paddingVertical: 6,
+                    paddingHorizontal: 12,
+                    borderRadius: 8,
+                  }}
+                  textStyle={{ fontSize: 12 }}
                 />
               </View>
               {/* --- Set List --- */}
@@ -89,7 +101,9 @@ const WorkoutTracker = () => {
                 {item.sets.map((set, index) => (
                   <Swipeable
                     key={`${item.name}-${index}`}
-                    renderRightActions={() => renderSetRightActions(item.name, index)}
+                    renderRightActions={() =>
+                      renderSetRightActions(item.name, index)
+                    }
                   >
                     <View style={styles.setRow}>
                       <Text style={styles.setLabel}>Set {index + 1}:</Text>
@@ -102,7 +116,14 @@ const WorkoutTracker = () => {
                             placeholder="0"
                             placeholderTextColor={colors.border}
                             value={set.weight}
-                            onChangeText={(text) => handlers.updateSets(item.name, index, 'weight', text)}
+                            onChangeText={(text) =>
+                              handlers.updateSets(
+                                item.name,
+                                index,
+                                'weight',
+                                text,
+                              )
+                            }
                           />
                         </View>
                         <View style={styles.inputWrapper}>
@@ -113,7 +134,14 @@ const WorkoutTracker = () => {
                             placeholder="0"
                             placeholderTextColor={colors.border}
                             value={set.reps}
-                            onChangeText={(text) => handlers.updateSets(item.name, index, 'reps', text)}
+                            onChangeText={(text) =>
+                              handlers.updateSets(
+                                item.name,
+                                index,
+                                'reps',
+                                text,
+                              )
+                            }
                           />
                         </View>
                       </View>
@@ -127,7 +155,7 @@ const WorkoutTracker = () => {
       />
       {/* --- Floating Action Button --- */}
       <View style={styles.fabContainer}>
-        <AppButton 
+        <AppButton
           onPress={() => toggleModal('addExercise', true)}
           title="Add Exercise"
           variant="primary"
@@ -140,7 +168,9 @@ const WorkoutTracker = () => {
         onAddExercise={handlers.addExercise}
         onCancel={() => toggleModal('addExercise', false)}
         showExerciseInputModal={modals.exerciseInput}
-        setShowExerciseInputModal={(value) => toggleModal('exerciseInput', value)}
+        setShowExerciseInputModal={(value) =>
+          toggleModal('exerciseInput', value)
+        }
       />
       <ChooseWorkout
         visible={modals.chooseWorkout}

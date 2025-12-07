@@ -11,44 +11,54 @@ import { colors, spacing, typography } from '../styles/theme';
  * @param {Object} [props.textStyle] - Additional text styles
  * @returns {JSX.Element} - TouchableOpacity button component
  */
-export const AppButton = ({ onPress, title, style, textStyle, variant = 'primary' }) => {
-  const backgroundColor = variant === 'secondary' ? colors.secondary
-    : variant === 'danger' ? colors.danger
-    : variant === 'outline' ? 'transparent'
-    : variant === 'primaryDark' ? colors.primaryDark
-    : variant === 'success' ? colors.success
-    : variant === 'cancel' ? colors.background
-    : colors.primary;
+export const AppButton = ({
+  onPress,
+  title,
+  style,
+  textStyle,
+  variant = 'primary',
+}) => {
+  const backgroundColor =
+    variant === 'secondary'
+      ? colors.secondary
+      : variant === 'danger'
+        ? colors.danger
+        : variant === 'outline'
+          ? 'transparent'
+          : variant === 'primaryDark'
+            ? colors.primaryDark
+            : variant === 'success'
+              ? colors.success
+              : variant === 'cancel'
+                ? colors.background
+                : colors.primary;
 
-  const TextColor = variant === 'outline' ? colors.primary
-    : variant === 'cancel' ? colors.textSecondary
-    : colors.white;
+  const TextColor =
+    variant === 'outline'
+      ? colors.primary
+      : variant === 'cancel'
+        ? colors.textSecondary
+        : colors.white;
 
-  const border = variant === 'outline' ? {
-    borderWidth: 1,
-    borderColor: colors.primary,
-  } : {};
+  const border =
+    variant === 'outline'
+      ? {
+          borderWidth: 1,
+          borderColor: colors.primary,
+        }
+      : {};
 
   return (
-    <TouchableOpacity 
-      onPress={onPress} 
-      style={[
-        styles.button,
-        { backgroundColor },
-        border,
-        style
-      ]}
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.button, { backgroundColor }, border, style]}
       activeOpacity={0.7}
     >
-      <Text 
-        style={[
-          styles.text,
-          { color: TextColor },
-          textStyle
-        ]}>{title}
+      <Text style={[styles.text, { color: TextColor }, textStyle]}>
+        {title}
       </Text>
     </TouchableOpacity>
-  );  
+  );
 };
 
 const styles = StyleSheet.create({

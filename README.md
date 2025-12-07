@@ -9,6 +9,7 @@
 > **No-nonsense, cross-platform mobile app for logging workouts locally with fast iteration and data persistence!** 🏋️
 
 ## Technologies
+
 - React Native
 - Expo Go
 - SQLite
@@ -22,10 +23,10 @@ Track your workouts anywhere, anytime. This personal project challenges the tren
 
 ## Demo
 
-| **1. Exercise Setup** | **2. Workout Logging** | **3. Save & Export** |
-|:---:|:---:|:---:|
-| *Create custom exercises with minimal menu diving.* | *Log sets, edit values, and swipe-to-delete in real-time.* | *Save your sessions directly into persistent local storage.* |
-| ![Setup GIF](./assets/demo_setup.gif) | ![Grind GIF](./assets/demo_grind.gif) | ![History GIF](./assets/demo_history.gif) |
+|                **1. Exercise Setup**                |                   **2. Workout Logging**                   |                     **3. Save & Export**                     |
+| :-------------------------------------------------: | :--------------------------------------------------------: | :----------------------------------------------------------: |
+| _Create custom exercises with minimal menu diving._ | _Log sets, edit values, and swipe-to-delete in real-time._ | _Save your sessions directly into persistent local storage._ |
+|        ![Setup GIF](./assets/demo_setup.gif)        |           ![Grind GIF](./assets/demo_grind.gif)            |          ![History GIF](./assets/demo_history.gif)           |
 
 ## Project Architecture
 
@@ -34,22 +35,22 @@ The codebase follows a separation of concerns principle between UI, logic and da
 ```text
 root
 ├── hooks/                    # Custom logic hooks for UI components.
-│   ├── useWorkoutTracker.js  
-│   ├── useAddExercise.js     
-│   ├── useChooseWorkout.js   
-│   ├── useExerciseInput.js   
-├── sqlconnection/            
+│   ├── useWorkoutTracker.js
+│   ├── useAddExercise.js
+│   ├── useChooseWorkout.js
+│   ├── useExerciseInput.js
+├── sqlconnection/
 │   └── db.js                 # Raw SQL queries, WAL mode init, and transaction handling.
-├── screens/                  
+├── screens/
 │   └── WorkoutTracker.js     # Main application screen UI component.
 ├── modals/                   # Isolated UI components for modals.
 │   ├── AddExercise.js
 │   ├── ChooseWorkout.js
 |   └── ExerciseInput.js
-├── components/               
+├── components/
 |   └── AppButton.js          # Custom button component.
 ├── styles/
-│   ├── mainStyles.js         
+│   ├── mainStyles.js
 │   └── theme.js              # Centralized style definitions.
 └── tests/
     └── App.test.js           # Unit tests for the application.
@@ -58,24 +59,25 @@ root
 ## Getting Started
 
 1. **Clone the repository**
-    ```bash
-    git clone https://github.com/jonjyr/workout-tracker.git
-     ```
-    
+   ```bash
+   git clone https://github.com/jonjyr/workout-tracker.git
+   ```
 2. **Navigate to the project directory**
-    ```bash
-    cd workout-tracker
-    ```
 
-2. **Install dependencies**
-    ```bash
-    npm install
-    ```
+   ```bash
+   cd workout-tracker
+   ```
 
-3. **Run the application**
-    ```bash
-    npx expo start
-    ```
+3. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+4. **Run the application**
+   ```bash
+   npx expo start
+   ```
 
 ## Future Roadmap
 

@@ -18,9 +18,9 @@ export const useExerciseInput = ({ onInputExercise, onInputCancel }) => {
    * Handler for canceling the input screen
    */
   const handleCancel = () => {
-    setName(''); 
+    setName('');
     onInputCancel();
-  }
+  };
 
   /**
    * Handler for submitting the input
@@ -30,7 +30,7 @@ export const useExerciseInput = ({ onInputExercise, onInputCancel }) => {
     if (!name.trim()) return;
     onInputExercise(name);
     setName('');
-  }
+  };
 
   return { name, setName, handleCancel, handleSubmit };
-}
+};

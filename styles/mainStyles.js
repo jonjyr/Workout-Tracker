@@ -7,7 +7,6 @@ const { width } = Dimensions.get('window');
  * Main stylesheet for the application
  */
 export const mainStyles = StyleSheet.create({
-
   // --- Layout ---
 
   screen: {
@@ -16,7 +15,7 @@ export const mainStyles = StyleSheet.create({
     paddingTop: 60,
     paddingBottom: 70,
   },
-    modalScreen: {
+  modalScreen: {
     flex: 1,
     backgroundColor: colors.background,
     paddingTop: 40,

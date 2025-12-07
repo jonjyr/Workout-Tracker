@@ -30,10 +30,9 @@ export const useChooseWorkout = (visible) => {
 
       dbResult.forEach((workout, index) => {
         workout.index = index + 1;
-      })
+      });
       setWorkoutList(dbResult);
-    }
-    catch (error) {
+    } catch (error) {
       console.log(`Error reading workouts: ${error.message}`);
       Alert.alert('Error', 'Failed to load saved workouts.');
     }
@@ -45,31 +44,26 @@ export const useChooseWorkout = (visible) => {
    * @param {number} id - The unique ID of the saved workout
    */
   const confirmDeleteWorkout = (id) => {
-    Alert.alert(
-      "Delete Workout",
-      "Permanently delete this workout?",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "OK",
-          style: "destructive",
-          onPress: () => deleteWorkoutFromDB(id)
-        }
-      ]
-    );
+    Alert.alert('Delete Workout', 'Permanently delete this workout?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'OK',
+        style: 'destructive',
+        onPress: () => deleteWorkoutFromDB(id),
+      },
+    ]);
   };
 
   /**
-  * Deletes a saved workout from the database
-  * @param {number} id - The unique ID of the saved workout
-  * @throws {Error} If deleting fails
-  */
+   * Deletes a saved workout from the database
+   * @param {number} id - The unique ID of the saved workout
+   * @throws {Error} If deleting fails
+   */
   const deleteWorkoutFromDB = async (id) => {
     try {
       await deleteWorkout(id);
       readWorkouts();
-    } 
-    catch (error) {
+    } catch (error) {
       console.error(`Error deleting workout: ${error.message}`);
       Alert.alert('Error', 'Failed to delete workout.');
     }
@@ -79,6 +73,6 @@ export const useChooseWorkout = (visible) => {
     workoutList,
     readWorkouts,
     confirmDeleteWorkout,
-    deleteWorkoutFromDB
+    deleteWorkoutFromDB,
   };
 };

@@ -16,11 +16,7 @@ const ExerciseInput = ({ visible }) => {
   const { name, setName, handleCancel, handleSubmit } = useExerciseInput();
 
   return (
-    <Modal 
-      visible={visible}
-      transparent={true}
-      animationType="fade"
-    >
+    <Modal visible={visible} transparent={true} animationType="fade">
       <View style={styles.inputScreen}>
         <View style={styles.inputContainer}>
           <Text style={styles.heading}>Create New Exercise</Text>
@@ -33,7 +29,7 @@ const ExerciseInput = ({ visible }) => {
             autoFocus={true}
           />
           <View style={styles.actionBar}>
-            <AppButton 
+            <AppButton
               onPress={handleSubmit}
               title="Create"
               style={styles.actionButton}

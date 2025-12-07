@@ -20,12 +20,12 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-      
+
       - name: Install Dependecies
         run: npm ci
 
       - name: Run Lint
         run: npm run lint
-      
+
       - name: Run Tests
         run: npm test
