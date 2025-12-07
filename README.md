@@ -3,7 +3,7 @@
     <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/jonjyr/Workout-Tracker/ci.yml?style=plastic" />
     <img alt="React Native Badge" src="https://img.shields.io/badge/React_Native-20232A?style=plastic&logo=react&logoColor=61DAFB" />
     <img alt="SQLite Badge" src="https://img.shields.io/badge/SQLite-07405E?style=plastic&logo=sqlite&logoColor=white" />
-    <img alt="JAvaScript Badge" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=plastic&logo=javascript&logoColor=black" />
+    <img alt="JavaScript Badge" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=plastic&logo=javascript&logoColor=black" />
 </div><br>
 
 > **No-nonsense, cross-platform mobile app for logging workouts locally with fast iteration and data persistence!** 🏋️
