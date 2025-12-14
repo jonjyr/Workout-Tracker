@@ -41,12 +41,9 @@ export const init = async () => {
  */
 export const saveExercise = async (name) => {
   const db = await init();
-  const statement = await db.prepareAsync(
-    'INSERT INTO exercises (name) VALUES ($name)',
-  );
-
-  await statement.executeAsync({ $name: name });
-  await statement.finalizeAsync();
+  await db.runAsync('INSERT INTO exercises (name) VALUES ($name)', {
+    $name: name,
+  });
 };
 
 /**
@@ -55,12 +52,9 @@ export const saveExercise = async (name) => {
  */
 export const deleteExercise = async (name) => {
   const db = await init();
-  const statement = await db.prepareAsync(
-    'DELETE FROM exercises WHERE name = $name',
-  );
-
-  await statement.executeAsync({ $name: name });
-  await statement.finalizeAsync();
+  await db.runAsync('DELETE FROM exercises WHERE name = $name', {
+    $name: name,
+  });
 };
 
 /**
@@ -88,13 +82,11 @@ export const fetchAllExercises = async () => {
  */
 export const saveWorkout = async (exercises, date) => {
   const db = await init();
-  const statement = await db.prepareAsync(
-    'INSERT INTO workouts (data, date) VALUES ($data, $date)',
-  );
   const jsonData = JSON.stringify(exercises);
 
-  await statement.executeAsync({ $data: jsonData, $date: date });
-  await statement.finalizeAsync();
+  await db.runAsync('INSERT INTO workouts (data, date) VALUES ($data, $date)',
+    { $data: jsonData, $date: date },
+  );
 };
 
 /**
@@ -103,12 +95,7 @@ export const saveWorkout = async (exercises, date) => {
  */
 export const deleteWorkout = async (id) => {
   const db = await init();
-  const statement = await db.prepareAsync(
-    'DELETE FROM workouts WHERE id = $id',
-  );
-
-  await statement.executeAsync({ $id: id });
-  await statement.finalizeAsync();
+  await db.runAsync('DELETE FROM workouts WHERE id = $id', { $id: id });
 };
 
 /**
