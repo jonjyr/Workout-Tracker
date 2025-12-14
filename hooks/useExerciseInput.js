@@ -7,7 +7,7 @@ import { useState } from 'react';
  * @param {function} onInputCancel - Parent handler to close the input modal
  * @returns {Object} - Object containing input state and handlers for the input modal
  */
-export const useExerciseInput = ( onInputExercise, onInputCancel ) => {
+export const useExerciseInput = (onInputExercise, onInputCancel) => {
   // --- State for Input ---
   const [name, setName] = useState('');
 

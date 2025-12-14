@@ -13,9 +13,9 @@ import { useExerciseInput } from '../hooks/useExerciseInput';
  * @returns {JSX.Element} - Modal component
  */
 const ExerciseInput = ({ visible, onInputExercise, onInputCancel }) => {
-  const { name, setName, handleCancel, handleSubmit } = useExerciseInput( 
+  const { name, setName, handleCancel, handleSubmit } = useExerciseInput(
     onInputExercise,
-    onInputCancel
+    onInputCancel,
   );
 
   return (
