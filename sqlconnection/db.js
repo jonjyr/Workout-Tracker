@@ -84,9 +84,10 @@ export const saveWorkout = async (exercises, date) => {
   const db = await init();
   const jsonData = JSON.stringify(exercises);
 
-  await db.runAsync('INSERT INTO workouts (data, date) VALUES ($data, $date)',
-    { $data: jsonData, $date: date },
-  );
+  await db.runAsync('INSERT INTO workouts (data, date) VALUES ($data, $date)', {
+    $data: jsonData,
+    $date: date,
+  });
 };
 
 /**
