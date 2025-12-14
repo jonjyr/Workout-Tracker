@@ -4,33 +4,39 @@
 
 import * as SQLite from 'expo-sqlite';
 
-// --- Singleton Instance ---
-// This ensures that only one instance of the database connection is created
-let dbInstance = null;
+// --- Singleton Promise ---
+// Ensures that only one instance of the database is opened at a time
+let dbPromise = null;
 
 // --- Initialization ---
 
 /**
  * Initializes the SQLite database connection
- * If a connection exists, it returns it immediately
+ * Returns the same promise to all calls
+ * @throws {Error} If initialization fails
  * @returns {Promise<SQLite.SQLiteDatabase>} The database instance
  */
-export const init = async () => {
-  if (dbInstance) {
-    return dbInstance;
+export const init = () => {
+  if (dbPromise) {
+    return dbPromise;
   }
 
-  const db = await SQLite.openDatabaseAsync('exercises.db');
+  dbPromise = (async () => {
+    try {
+      const db = await SQLite.openDatabaseAsync('exercises.db');
 
-  await db.execAsync(
-    'PRAGMA journal_mode = WAL;' +
-      'CREATE TABLE IF NOT EXISTS exercises(id INTEGER PRIMARY KEY, name TEXT NOT NULL);' +
-      'CREATE TABLE IF NOT EXISTS workouts(id INTEGER PRIMARY KEY, data TEXT NOT NULL, date TEXT NOT NULL);',
-  );
-
-  dbInstance = db;
-
-  return dbInstance;
+      await db.execAsync(
+        'PRAGMA journal_mode = WAL;' +
+          'CREATE TABLE IF NOT EXISTS exercises(id INTEGER PRIMARY KEY, name TEXT NOT NULL);' +
+          'CREATE TABLE IF NOT EXISTS workouts(id INTEGER PRIMARY KEY, data TEXT NOT NULL, date TEXT NOT NULL);',
+      );
+      return db;
+    } catch (error) {
+      dbPromise = null;
+      throw new Error(`Error initializing database: ${error.message}`);
+    }
+  })();
+  return dbPromise;
 };
 
 // --- Add Exercise Operations ---
