@@ -4,18 +4,26 @@
 
 import * as SQLite from 'expo-sqlite';
 
+// --- Singleton Instance ---
+// This ensures that only one instance of the database connection is created
+let dbInstance = null;
+
 // --- Initialization ---
 
 /**
- * Initializes the database connection and creates tables if they don't exist
- * Sets the journal mode to WAL for better performance
- * Use useNewConnection to not crash when database is emptied
+ * Initializes the SQLite database connection
+ * If a connection exists, it returns it immediately
  * @returns {Promise<SQLite.SQLiteDatabase>} The database instance
  */
 export const init = async () => {
-  const db = await SQLite.openDatabaseAsync('exercises.db', {
-    useNewConnection: true,
-  });
+  if (dbInstance) {
+    return dbInstance;
+  }
+
+  const db = await SQLite.openDatabaseAsync('exercises.db');
+
+  await db.execAsync('DROP TABLE IF EXISTS workouts;');
+  await db.execAsync('DROP TABLE IF EXISTS exercises;');
 
   await db.execAsync(
     'PRAGMA journal_mode = WAL;' +
@@ -23,7 +31,9 @@ export const init = async () => {
       'CREATE TABLE IF NOT EXISTS workouts(id INTEGER PRIMARY KEY, data TEXT NOT NULL, date TEXT NOT NULL);',
   );
 
-  return db;
+  dbInstance = db;
+
+  return dbInstance;
 };
 
 // --- Add Exercise Operations ---
