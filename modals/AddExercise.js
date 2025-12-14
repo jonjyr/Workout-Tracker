@@ -8,7 +8,7 @@ import { useAddExercise } from '../hooks/useAddExercise';
  * Modal used to select an exercise to add to a workout or to create a new exercise
  * @param {Object} props
  * @param {boolean} props.visible - Controls modal visibility
- * @param {function} props.onAddExercise - Parent handler to add a selected exercise to a workout
+ * @param {function} props.onAddExercise - Parent handler to add an exercise
  * @param {function} props.onCancel - Parent handler to close the modal
  * @returns {JSX.Element} - Modal component
  */
@@ -20,6 +20,7 @@ const AddExercise = ({ visible, onAddExercise, onCancel }) => {
     inputModalVisible,
     setInputModalVisible,
   } = useAddExercise();
+
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.modalScreen}>

@@ -89,7 +89,7 @@ export const useAddExercise = () => {
       {
         text: 'OK',
         style: 'destructive',
-        onPress: () => removeExercise(),
+        onPress: () => removeExercise(name),
       },
     ]);
   };

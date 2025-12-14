@@ -3,12 +3,11 @@ import { useState } from 'react';
 /**
  * Custom hook for handling user input for a new exercise
  * Handles input state and button handlers
- * @param {Object} props
- * @param {function} props.onInputExercise - Callback for submitting the input
- * @param {function} props.onInputCancel - Callback for canceling the modal
+ * @param {function} onInputExercise - Parent handler to create a new exercise
+ * @param {function} onInputCancel - Parent handler to close the input modal
  * @returns {Object} - Object containing input state and handlers for the input modal
  */
-export const useExerciseInput = ({ onInputExercise, onInputCancel }) => {
+export const useExerciseInput = ( onInputExercise, onInputCancel ) => {
   // --- State for Input ---
   const [name, setName] = useState('');
 
@@ -19,7 +18,7 @@ export const useExerciseInput = ({ onInputExercise, onInputCancel }) => {
    */
   const handleCancel = () => {
     setName('');
-    onInputCancel();
+    if (onInputCancel) onInputCancel();
   };
 
   /**
@@ -28,7 +27,7 @@ export const useExerciseInput = ({ onInputExercise, onInputCancel }) => {
    */
   const handleSubmit = () => {
     if (!name.trim()) return;
-    onInputExercise(name);
+    if (onInputExercise) onInputExercise(name);
     setName('');
   };
 

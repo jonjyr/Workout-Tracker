@@ -8,12 +8,15 @@ import { useExerciseInput } from '../hooks/useExerciseInput';
  * Modal component for user input of a new exercise
  * @param {Object} props
  * @param {boolean} props.visible - Controls modal visibility
- * @param {function} props.onInputExercise - Callback for submitting the input
- * @param {function} props.onInputCancel - Callback for canceling
+ * @param {function} props.onInputExercise - Callback to create a new exercise
+ * @param {function} props.onInputCancel - Callback to close the modal
  * @returns {JSX.Element} - Modal component
  */
-const ExerciseInput = ({ visible }) => {
-  const { name, setName, handleCancel, handleSubmit } = useExerciseInput();
+const ExerciseInput = ({ visible, onInputExercise, onInputCancel }) => {
+  const { name, setName, handleCancel, handleSubmit } = useExerciseInput( 
+    onInputExercise,
+    onInputCancel
+  );
 
   return (
     <Modal visible={visible} transparent={true} animationType="fade">
