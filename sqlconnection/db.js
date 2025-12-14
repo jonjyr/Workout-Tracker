@@ -22,9 +22,6 @@ export const init = async () => {
 
   const db = await SQLite.openDatabaseAsync('exercises.db');
 
-  await db.execAsync('DROP TABLE IF EXISTS workouts;');
-  await db.execAsync('DROP TABLE IF EXISTS exercises;');
-
   await db.execAsync(
     'PRAGMA journal_mode = WAL;' +
       'CREATE TABLE IF NOT EXISTS exercises(id INTEGER PRIMARY KEY, name TEXT NOT NULL);' +
