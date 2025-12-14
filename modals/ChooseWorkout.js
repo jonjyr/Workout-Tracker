@@ -12,7 +12,7 @@ import { useChooseWorkout } from '../hooks/useChooseWorkout';
  * @returns {JSX.Element} - Modal component
  */
 const ChooseWorkout = ({ visible, onImportWorkout, onImportCancel }) => {
-  const { workoutList, confirmDeleteWorkout } = useChooseWorkout();
+  const { workoutList, confirmDeleteWorkout } = useChooseWorkout(visible);
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.modalScreen}>
