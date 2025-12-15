@@ -38,7 +38,7 @@ root
 │   ├── useWorkoutTracker.js
 │   ├── useAddExercise.js
 │   ├── useChooseWorkout.js
-│   ├── useExerciseInput.js
+│   └── useExerciseInput.js
 ├── sqlconnection/
 │   └── db.js                # Raw SQL queries, WAL mode init, and transaction handling.
 ├── screens/
